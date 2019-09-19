@@ -1,10 +1,18 @@
 package ui;
 
-public class Main {
-    public static void main(String[] args) {
-        SoundInventory sounds = new SoundInventory();
+import java.util.Scanner;
 
-        Word test = new Word("blarbel");
+public class Main {
+
+    public static void main(String[] args) {
+        Scanner input;
+        SoundInventory sounds = new SoundInventory();
+        input = new Scanner(System.in);
+        String word = "";
+
+        System.out.println("New word to analyze:");
+        word = input.nextLine();
+        Word test = new Word(word);
         test.analyzeWord(sounds);
     }
 }
