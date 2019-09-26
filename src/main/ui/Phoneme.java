@@ -11,6 +11,7 @@ public class Phoneme {
         System.out.println("New sound: " + this.sound);
     }
 
+    // EFFECTS: returns true if this sound is the same as a sound found in the user input, false otherwise
     public boolean sameSound(Character s) {
         return s == sound;
     }
