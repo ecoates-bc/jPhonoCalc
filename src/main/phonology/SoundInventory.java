@@ -1,4 +1,4 @@
-package ui;
+package phonology;
 
 import java.util.ArrayList;
 import java.util.List;

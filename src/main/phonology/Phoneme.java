@@ -1,4 +1,4 @@
-package ui;
+package phonology;
 
 // Represents a single sound
 public class Phoneme {
@@ -12,7 +12,7 @@ public class Phoneme {
     }
 
     // EFFECTS: returns true if this sound is the same as a sound found in the user input, false otherwise
-    public boolean sameSound(Character s) {
+    public boolean checkSimilar(Character s) {
         return s == sound;
     }
 }
