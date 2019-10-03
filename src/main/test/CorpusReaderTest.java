@@ -1,6 +1,8 @@
 package test;
 
+import io.LoaderSaver;
 import model.CorpusReader;
+import model.LanguageTool;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import phonology.Phoneme;
@@ -39,6 +41,9 @@ public class CorpusReaderTest {
         pe = new Phoneme('e');
         pi = new Phoneme('i');
     }
+
+    @Test
+    void testLanguageTool(LanguageTool l) {}
 
     @Test
     void testRead() throws IOException {
