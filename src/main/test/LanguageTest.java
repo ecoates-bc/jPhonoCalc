@@ -23,7 +23,7 @@ public class LanguageTest {
 
     @Test
     void testContains() {
-        inventory.inventory.add(ph);
+        inventory.addToInventory(ph);
 
         assertTrue(inventory.contains(ph));
         assertFalse(inventory.contains(qh));
@@ -31,7 +31,7 @@ public class LanguageTest {
 
     @Test
     void testGetInventory() {
-        inventory.inventory.add(ph);
+        inventory.addToInventory(ph);
         assertTrue(inventory.getInventory().equals("p"));
         assertFalse(inventory.getInventory().equals("pp"));
 
@@ -39,9 +39,15 @@ public class LanguageTest {
 
     @Test
     void testGetInventoryLong() {
-        inventory.inventory.add(ph);
-        inventory.inventory.add(qh);
+        inventory.addToInventory(ph);
+        inventory.addToInventory(qh);
         assertTrue(inventory.getInventory().equals("pq"));
         assertFalse(inventory.getInventory().equals("qp"));
+    }
+
+    @Test
+    void testAdd() {
+        inventory.addToInventory(ph);
+        assertTrue(inventory.inventory.contains(ph));
     }
 }

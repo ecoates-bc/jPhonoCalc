@@ -44,14 +44,14 @@ public class CorpusReaderTest {
     }
 
     @Test
-    void testAnalyze() throws IOException {
+    void testAnalyze() {
         reader.words.add("test");
         reader.analyze();
         for (Phoneme p: reader.language.inventory) {
             if (p.isEqual('t')) {
-                assertTrue(p.pre.get(0).equals('#'));
-                assertTrue(p.pre.get(1).equals('s'));
-                assertTrue(p.post.get(0).equals('e'));
+                assertTrue(p.pre.get(0).sound.equals('#'));
+                assertTrue(p.pre.get(1).sound.equals('s'));
+                assertTrue(p.post.get(0).sound.equals('e'));
             }
         }
     }
