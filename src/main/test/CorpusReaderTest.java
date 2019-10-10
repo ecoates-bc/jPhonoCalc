@@ -44,7 +44,7 @@ public class CorpusReaderTest {
 
     @Test
     void testAnalyze() throws IOException {
-        reader.read("test.txt");
+        reader.words.add("test");
         reader.analyze();
         for (Phoneme p: reader.language.inventory) {
             if (p.isEqual('t')) {
