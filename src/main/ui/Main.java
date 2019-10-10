@@ -1,6 +1,6 @@
-package model;
+package ui;
 
-import phonology.Consonant;
+import model.CorpusReader;
 import phonology.Language;
 
 import java.io.IOException;
