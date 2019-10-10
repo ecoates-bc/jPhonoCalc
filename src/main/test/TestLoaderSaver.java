@@ -17,12 +17,12 @@ public class TestLoaderSaver {
     @BeforeEach
     void runBefore() throws IOException {
         inventory = new Language();
-        loader = new CorpusReader(inventory, "english.txt");
+        loader = new CorpusReader(inventory, "data/english.txt");
     }
 
     @Test
     void testLoader() throws IOException {
-        loader.read("corpus.txt");
+        loader.read("data/corpus.txt");
     }
 
     @Test

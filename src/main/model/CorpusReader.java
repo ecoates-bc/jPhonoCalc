@@ -68,7 +68,7 @@ public class CorpusReader implements LanguageTool, LoaderSaver {
 
     @Override
     public void save(String filename) throws FileNotFoundException, UnsupportedEncodingException {
-        PrintWriter writer = new PrintWriter(filename + ".txt", "UTF-8");
+        PrintWriter writer = new PrintWriter("data/" + filename + ".txt", "UTF-8");
         for (Phoneme p: language.inventory) {
             String acc = "";
             writer.println(p.sound);
@@ -103,7 +103,7 @@ public class CorpusReader implements LanguageTool, LoaderSaver {
         }
     }
 
-    public static ArrayList<String> splitOnSpace(String line) {
+    private static ArrayList<String> splitOnSpace(String line) {
         String[] splits = line.split(" ");
         return new ArrayList<>(Arrays.asList(splits));
     }

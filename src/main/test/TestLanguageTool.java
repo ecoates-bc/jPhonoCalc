@@ -15,7 +15,7 @@ public class TestLanguageTool {
     @BeforeEach
     void runBefore() throws IOException {
         inventory = new Language();
-        langTool = new CorpusReader(inventory, "english.txt");
+        langTool = new CorpusReader(inventory, "data/english.txt");
     }
     
     @Test

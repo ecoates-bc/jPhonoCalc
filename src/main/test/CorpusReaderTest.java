@@ -27,7 +27,7 @@ public class CorpusReaderTest {
     void runBefore() throws IOException {
         inventory = new Language();
 
-        reader = new CorpusReader(inventory, "english.txt");
+        reader = new CorpusReader(inventory, "data/english.txt");
 
         pa = new Vowel('a');
         pe = new Vowel('e');
@@ -36,7 +36,7 @@ public class CorpusReaderTest {
 
     @Test
     void testRead() throws IOException {
-        reader.read("test.txt");
+        reader.read("data/test.txt");
         assertTrue(reader.words.contains("test"));
         assertTrue(reader.words.contains("words"));
         assertTrue(reader.words.contains("input"));
@@ -63,7 +63,7 @@ public class CorpusReaderTest {
         reader.language.inventory.add(pi);
         reader.save("lang");
 
-        List<String> data = Files.readAllLines(Paths.get("lang.txt"));
+        List<String> data = Files.readAllLines(Paths.get("data/lang.txt"));
         assertTrue(data.get(0).equals("p"));
     }
 }
