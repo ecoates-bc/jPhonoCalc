@@ -6,6 +6,7 @@ import org.junit.jupiter.api.Test;
 import phonology.Consonant;
 import phonology.Phoneme;
 import phonology.Language;
+import phonology.Vowel;
 
 import java.io.IOException;
 import java.nio.file.Files;
@@ -28,9 +29,9 @@ public class CorpusReaderTest {
 
         reader = new CorpusReader(inventory, "english.txt");
 
-        pa = new Consonant('a');
-        pe = new Consonant('e');
-        pi = new Consonant('i');
+        pa = new Vowel('a');
+        pe = new Vowel('e');
+        pi = new Consonant('l');
     }
 
     @Test

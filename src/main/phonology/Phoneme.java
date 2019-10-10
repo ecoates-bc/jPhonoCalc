@@ -6,8 +6,8 @@ import java.util.List;
 // Represents a single sound
 public abstract class Phoneme {
     public Character sound;
-    public List<Character> pre;
-    public List<Character> post;
+    public List<Phoneme> pre;
+    public List<Phoneme> post;
 
     // MODIFIES: this
     // EFFECTS: adds a new sound to the inventory
@@ -24,15 +24,15 @@ public abstract class Phoneme {
 
     // MODIFIES: this
     // EFFECTS: adds observed proceeding sound
-    public void addPre(Character c) {
+    public void addPre(Phoneme c) {
         pre.add(c);
     }
 
     // MODIFIES: this
     // EFFECTS: adds observed succeeding sound
-    public void addPost(Character c) {
+    public void addPost(Phoneme c) {
         post.add(c);
     }
 
-    protected abstract boolean isCluster();
+    public abstract List<Phoneme> getOppositeBefores();
 }

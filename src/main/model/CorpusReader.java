@@ -72,13 +72,13 @@ public class CorpusReader implements LanguageTool, LoaderSaver {
         for (Phoneme p: language.inventory) {
             String acc = "";
             writer.println(p.sound);
-            for (Character q: p.pre) {
-                acc += q;
+            for (Phoneme q: p.pre) {
+                acc += q.sound;
             }
             writer.println("Pre: " + acc);
             acc = "";
-            for (Character r: p.post) {
-                acc += r;
+            for (Phoneme r: p.post) {
+                acc += r.sound;
             }
             writer.println("Post: " + acc);
             writer.println(" ");
@@ -90,15 +90,13 @@ public class CorpusReader implements LanguageTool, LoaderSaver {
     // MODIFIES: this.language
     // EFFECTS: adds distribution info to each phoneme in the inventory
     public void analyzeWord(String word) {
-        Character pre = '#';
         Phoneme before = new Consonant('#');
 
         for (Character c: word.toCharArray()) {
             for (Phoneme p: language.inventory) {
                 if (p.isEqual(c)) {
-                    p.pre.add(pre);
-                    before.post.add(p.sound);
-                    pre = p.sound;
+                    p.pre.add(before);
+                    before.post.add(p);
                     before = p;
                 }
             }
