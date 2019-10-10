@@ -63,6 +63,6 @@ public class CorpusReaderTest {
         reader.save("lang");
 
         List<String> data = Files.readAllLines(Paths.get("lang.txt"));
-        assertTrue(data.get(0).equals("aei"));
+        assertTrue(data.get(0).equals("p"));
     }
 }
