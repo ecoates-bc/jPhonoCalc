@@ -1,28 +1,29 @@
 package test;
 
+import phonology.Consonant;
 import phonology.Phoneme;
-import phonology.SoundInventory;
+import phonology.Language;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-public class SoundInventoryTest {
-    SoundInventory inventory;
+public class LanguageTest {
+    Language inventory;
     Phoneme ph;
     Phoneme qh;
 
     @BeforeEach
     void runBefore() {
-        inventory = new SoundInventory();
-        ph = new Phoneme('p');
-        qh = new Phoneme('q');
+        inventory = new Language();
+        ph = new Consonant('p');
+        qh = new Consonant('q');
     }
 
     @Test
     void testContains() {
-        inventory.sounds.add(ph);
+        inventory.inventory.add(ph);
 
         assertTrue(inventory.contains(ph));
         assertFalse(inventory.contains(qh));
@@ -30,7 +31,7 @@ public class SoundInventoryTest {
 
     @Test
     void testGetInventory() {
-        inventory.sounds.add(ph);
+        inventory.inventory.add(ph);
         assertTrue(inventory.getInventory().equals("p"));
         assertFalse(inventory.getInventory().equals("pp"));
 
@@ -38,8 +39,8 @@ public class SoundInventoryTest {
 
     @Test
     void testGetInventoryLong() {
-        inventory.sounds.add(ph);
-        inventory.sounds.add(qh);
+        inventory.inventory.add(ph);
+        inventory.inventory.add(qh);
         assertTrue(inventory.getInventory().equals("pq"));
         assertFalse(inventory.getInventory().equals("qp"));
     }

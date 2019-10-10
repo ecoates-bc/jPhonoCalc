@@ -4,16 +4,18 @@ import model.CorpusReader;
 import model.LanguageTool;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import phonology.SoundInventory;
+import phonology.Language;
+
+import java.io.IOException;
 
 public class TestLanguageTool {
-    SoundInventory inventory;
+    Language inventory;
     LanguageTool langTool;
 
     @BeforeEach
-    void runBefore() {
-        inventory = new SoundInventory();
-        langTool = new CorpusReader(inventory);
+    void runBefore() throws IOException {
+        inventory = new Language();
+        langTool = new CorpusReader(inventory, "english.txt");
     }
     
     @Test

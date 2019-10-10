@@ -1,12 +1,11 @@
 package test;
 
-import io.LoaderSaver;
 import model.CorpusReader;
-import model.LanguageTool;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import phonology.Consonant;
 import phonology.Phoneme;
-import phonology.SoundInventory;
+import phonology.Language;
 
 import java.io.IOException;
 import java.nio.file.Files;
@@ -17,33 +16,22 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class CorpusReaderTest {
     CorpusReader reader;
-    SoundInventory inventory;
-
-    String simpleWord;
-    String mediumWord;
-    String longWord;
+    Language inventory;
 
     Phoneme pa;
     Phoneme pe;
     Phoneme pi;
 
     @BeforeEach
-    void runBefore() {
-        inventory = new SoundInventory();
+    void runBefore() throws IOException {
+        inventory = new Language();
 
-        reader = new CorpusReader(inventory);
+        reader = new CorpusReader(inventory, "english.txt");
 
-        simpleWord = ("hi");
-        mediumWord = ("tested");
-        longWord = ("antidisestablishmentarianism");
-
-        pa = new Phoneme('a');
-        pe = new Phoneme('e');
-        pi = new Phoneme('i');
+        pa = new Consonant('a');
+        pe = new Consonant('e');
+        pi = new Consonant('i');
     }
-
-    @Test
-    void testLanguageTool(LanguageTool l) {}
 
     @Test
     void testRead() throws IOException {
@@ -55,35 +43,23 @@ public class CorpusReaderTest {
     }
 
     @Test
-    void analyzeSimpleWord() {
-        reader.analyzeWord(simpleWord);
-        assertTrue(reader.inventory.getInventory().equals("hi"));
-    }
-
-    @Test
-    void analyzeMediumWord() {
-        reader.analyzeWord(mediumWord);
-        assertTrue(reader.inventory.getInventory().equals("tesd"));
-    }
-
-    @Test
-    void analyzeLongWord() {
-        reader.analyzeWord(longWord);
-        assertTrue(reader.inventory.getInventory().equals("antidseblhmr"));
-    }
-
-    @Test
-    void analyzeManyWords() throws IOException {
+    void testAnalyze() throws IOException {
         reader.read("test.txt");
         reader.analyze();
-        assertTrue(reader.inventory.getInventory().equals("tesworduchxinp"));
+        for (Phoneme p: reader.language.inventory) {
+            if (p.isEqual('t')) {
+                assertTrue(p.pre.get(0).equals('#'));
+                assertTrue(p.pre.get(1).equals('s'));
+                assertTrue(p.post.get(0).equals('e'));
+            }
+        }
     }
 
     @Test
     void testOutput() throws IOException {
-        reader.inventory.sounds.add(pa);
-        reader.inventory.sounds.add(pe);
-        reader.inventory.sounds.add(pi);
+        reader.language.inventory.add(pa);
+        reader.language.inventory.add(pe);
+        reader.language.inventory.add(pi);
         reader.save("lang");
 
         List<String> data = Files.readAllLines(Paths.get("lang.txt"));

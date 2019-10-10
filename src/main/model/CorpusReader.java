@@ -1,8 +1,10 @@
 package model;
 
 import io.LoaderSaver;
+import phonology.Consonant;
+import phonology.Language;
 import phonology.Phoneme;
-import phonology.SoundInventory;
+import phonology.Vowel;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -16,11 +18,23 @@ import java.util.List;
 
 public class CorpusReader implements LanguageTool, LoaderSaver {
     public List<String> words;
-    public SoundInventory inventory;
+    public Language language;
 
-    public CorpusReader(SoundInventory inventory) {
-        this.inventory = inventory;
+    public CorpusReader(Language language, String path) throws IOException {
+        this.language = language;
         words = new ArrayList<>();
+
+        List<String> sounds = Files.readAllLines(Paths.get(path));
+
+        for (Character c: sounds.get(0).toCharArray()) {
+            Consonant newSound = new Consonant(c);
+            language.addToInventory(newSound);
+        }
+
+        for (Character c: sounds.get(1).toCharArray()) {
+            Vowel newSound = new Vowel(c);
+            language.addToInventory(newSound);
+        }
     }
 
     // REQUIRES: Valid pathway
@@ -40,7 +54,7 @@ public class CorpusReader implements LanguageTool, LoaderSaver {
     }
 
     // REQUIRES: No special characters
-    // MODIFIES: this.inventory
+    // MODIFIES: this.language
     // EFFECTS: Analyzes each word in the reader's word list
 
     @Override
@@ -55,23 +69,39 @@ public class CorpusReader implements LanguageTool, LoaderSaver {
     @Override
     public void save(String filename) throws FileNotFoundException, UnsupportedEncodingException {
         PrintWriter writer = new PrintWriter(filename + ".txt", "UTF-8");
-        writer.println(inventory.getInventory());
+        for (Phoneme p: language.inventory) {
+            String acc = "";
+            writer.println(p.sound);
+            for (Character q: p.pre) {
+                acc += q;
+            }
+            writer.println("Pre: " + acc);
+            acc = "";
+            for (Character r: p.post) {
+                acc += r;
+            }
+            writer.println("Post: " + acc);
+            writer.println(" ");
+        }
         writer.close();
     }
 
     // REQUIRES: No special characters
-    // MODIFIES: this.inventory
-    // EFFECTS: Creates new phonemes for each new sound/character not found in the sound inventory
+    // MODIFIES: this.language
+    // EFFECTS: adds distribution info to each phoneme in the inventory
     public void analyzeWord(String word) {
-        outerLoop:
-        for (char c: word.toCharArray()) {
-            for (Phoneme p: inventory.sounds) {
-                if (p.checkSimilar(c)) {
-                    continue outerLoop;
+        Character pre = '#';
+        Phoneme before = new Consonant('#');
+
+        for (Character c: word.toCharArray()) {
+            for (Phoneme p: language.inventory) {
+                if (p.isEqual(c)) {
+                    p.pre.add(pre);
+                    before.post.add(p.sound);
+                    pre = p.sound;
+                    before = p;
                 }
             }
-            Phoneme newSound = new Phoneme(c);
-            inventory.sounds.add(newSound);
         }
     }
 

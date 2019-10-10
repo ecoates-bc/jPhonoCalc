@@ -1,6 +1,7 @@
 package test;
 
 import phonology.Phoneme;
+import phonology.Consonant;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -13,14 +14,14 @@ public class PhonemeTest {
 
     @BeforeEach
     void runBefore() {
-        ph = new Phoneme('p');
-        qh = new Phoneme('q');
+        ph = new Consonant('p');
+        qh = new Consonant('q');
     }
 
     @Test
     void testSameSound() {
-        assertTrue(ph.checkSimilar('p'));
-        assertFalse(qh.checkSimilar('p'));
-        assertFalse(ph.checkSimilar('q'));
+        assertTrue(ph.isEqual('p'));
+        assertFalse(qh.isEqual('p'));
+        assertFalse(ph.isEqual('q'));
     }
 }

@@ -4,7 +4,7 @@ import io.LoaderSaver;
 import model.CorpusReader;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import phonology.SoundInventory;
+import phonology.Language;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -12,12 +12,12 @@ import java.io.UnsupportedEncodingException;
 
 public class TestLoaderSaver {
     LoaderSaver loader;
-    SoundInventory inventory;
+    Language inventory;
 
     @BeforeEach
-    void runBefore() {
-        inventory = new SoundInventory();
-        loader = new CorpusReader(inventory);
+    void runBefore() throws IOException {
+        inventory = new Language();
+        loader = new CorpusReader(inventory, "english.txt");
     }
 
     @Test

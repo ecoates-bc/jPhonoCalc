@@ -1,6 +1,7 @@
 package model;
 
-import phonology.SoundInventory;
+import phonology.Consonant;
+import phonology.Language;
 
 import java.io.IOException;
 import java.util.Scanner;
@@ -9,8 +10,8 @@ public class Main {
 
     public static void main(String[] args) throws IOException {
         Scanner input;
-        SoundInventory sounds = new SoundInventory();
-        CorpusReader reader = new CorpusReader(sounds);
+        Language english = new Language();
+        CorpusReader reader = new CorpusReader(english, "english.txt");
         input = new Scanner(System.in);
         String path = "";
 
@@ -20,7 +21,7 @@ public class Main {
         reader.analyze();
 
 
-        System.out.println("Name of language:");
+        System.out.println("Name output file:");
         path = input.nextLine();
         reader.save(path);
         System.out.println("End of program");
