@@ -24,8 +24,9 @@ public class ScannerTools {
         } catch (IOException e) {
             System.out.println("File not found. Try again.");
             handleUpload(reader);
+        } finally {
+            reader.analyze();
         }
-        reader.analyze();
     }
 
     public void handleSave(CorpusReader reader) throws FileNotFoundException, UnsupportedEncodingException {
