@@ -1,10 +1,10 @@
 package model;
 
-import io.LoaderSaver;
-import phonology.Consonant;
-import phonology.Language;
-import phonology.Phoneme;
-import phonology.Vowel;
+import ui.io.LoaderSaver;
+import model.phonology.Consonant;
+import model.phonology.Language;
+import model.phonology.Phoneme;
+import model.phonology.Vowel;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;

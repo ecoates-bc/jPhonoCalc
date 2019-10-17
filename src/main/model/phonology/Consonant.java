@@ -1,10 +1,10 @@
-package phonology;
+package model.phonology;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class Vowel extends Phoneme {
-    public Vowel(Character sound) {
+public class Consonant extends Phoneme {
+    public Consonant(Character sound) {
         super(sound);
     }
 
@@ -14,7 +14,7 @@ public class Vowel extends Phoneme {
     public List<Phoneme> getOppositeBefores() {
         List<Phoneme> list = new ArrayList<>();
         for (Phoneme p: pre) {
-            if (p instanceof Consonant) {
+            if (p instanceof Vowel) {
                 list.add(p);
             }
         }

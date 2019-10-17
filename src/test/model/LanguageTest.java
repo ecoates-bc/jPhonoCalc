@@ -1,8 +1,8 @@
-package test;
+package model;
 
-import phonology.Consonant;
-import phonology.Phoneme;
-import phonology.Language;
+import model.phonology.Consonant;
+import model.phonology.Phoneme;
+import model.phonology.Language;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 

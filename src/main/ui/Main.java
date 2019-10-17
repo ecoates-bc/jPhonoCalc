@@ -1,7 +1,7 @@
 package ui;
 
 import model.CorpusReader;
-import phonology.Language;
+import model.phonology.Language;
 
 import java.io.IOException;
 

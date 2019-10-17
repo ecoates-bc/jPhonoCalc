@@ -1,4 +1,4 @@
-package phonology;
+package model.phonology;
 
 import java.util.ArrayList;
 import java.util.List;

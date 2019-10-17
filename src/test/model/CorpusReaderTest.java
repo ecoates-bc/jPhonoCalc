@@ -1,12 +1,11 @@
-package test;
+package model;
 
-import model.CorpusReader;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import phonology.Consonant;
-import phonology.Phoneme;
-import phonology.Language;
-import phonology.Vowel;
+import model.phonology.Consonant;
+import model.phonology.Phoneme;
+import model.phonology.Language;
+import model.phonology.Vowel;
 
 import java.io.IOException;
 import java.nio.file.Files;

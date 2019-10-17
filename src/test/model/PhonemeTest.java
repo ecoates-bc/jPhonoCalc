@@ -1,10 +1,10 @@
-package test;
+package model;
 
-import phonology.Phoneme;
-import phonology.Consonant;
+import model.phonology.Phoneme;
+import model.phonology.Consonant;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import phonology.Vowel;
+import model.phonology.Vowel;
 
 import static org.junit.jupiter.api.Assertions.*;
 

@@ -1,10 +1,9 @@
-package test;
+package model;
 
-import io.LoaderSaver;
-import model.CorpusReader;
+import ui.io.LoaderSaver;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import phonology.Language;
+import model.phonology.Language;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;

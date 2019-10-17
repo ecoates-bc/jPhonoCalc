@@ -1,10 +1,8 @@
-package test;
+package model;
 
-import model.CorpusReader;
-import model.LanguageTool;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import phonology.Language;
+import model.phonology.Language;
 
 import java.io.IOException;
 
