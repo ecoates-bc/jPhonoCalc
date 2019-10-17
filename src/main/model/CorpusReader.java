@@ -1,5 +1,6 @@
 package model;
 
+import model.exceptions.UnexpectedCharacterException;
 import ui.io.LoaderSaver;
 import model.phonology.Consonant;
 import model.phonology.Language;
@@ -60,7 +61,13 @@ public class CorpusReader implements LanguageTool, LoaderSaver {
     @Override
     public void analyze() {
         for (String w: words) {
-            analyzeWord(w);
+            try {
+                analyzeWord(w);
+            } catch (UnexpectedCharacterException e) {
+                e.printStackTrace();
+            } finally {
+                continue;
+            }
         }
     }
 
@@ -89,17 +96,20 @@ public class CorpusReader implements LanguageTool, LoaderSaver {
     // REQUIRES: No special characters
     // MODIFIES: this.language
     // EFFECTS: adds distribution info to each phoneme in the inventory
-    public void analyzeWord(String word) {
+    public void analyzeWord(String word) throws UnexpectedCharacterException {
         Phoneme before = new Consonant('#');
 
+        OuterLoop:
         for (Character c: word.toCharArray()) {
             for (Phoneme p: language.inventory) {
                 if (p.isEqual(c)) {
                     p.pre.add(before);
                     before.post.add(p);
                     before = p;
+                    continue OuterLoop;
                 }
             }
+            throw new UnexpectedCharacterException(c.toString());
         }
     }
 

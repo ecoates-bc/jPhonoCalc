@@ -1,5 +1,6 @@
 package model;
 
+import model.exceptions.UnexpectedCharacterException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import model.phonology.Consonant;
@@ -13,6 +14,7 @@ import java.nio.file.Paths;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.fail;
 
 public class CorpusReaderTest {
     CorpusReader reader;
@@ -64,5 +66,30 @@ public class CorpusReaderTest {
 
         List<String> data = Files.readAllLines(Paths.get("data/lang.txt"));
         assertTrue(data.get(0).equals("p"));
+    }
+
+    @Test
+    void testGoodException() throws IOException {
+        reader.read("data/test.txt");
+        try {
+            for (String w: reader.words) {
+                reader.analyzeWord(w);
+            }
+        } catch (UnexpectedCharacterException e) {
+            fail("Found exception");
+        }
+    }
+
+    @Test
+    void testBadException() throws IOException {
+        reader.read("data/test_bad.txt");
+        try {
+            for (String w: reader.words) {
+                reader.analyzeWord(w);
+            }
+            fail("No exceptions found");
+        } catch (UnexpectedCharacterException e) {
+            System.out.println("Exception found");
+        }
     }
 }
