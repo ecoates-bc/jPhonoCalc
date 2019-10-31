@@ -49,7 +49,7 @@ public class CorpusReaderTest {
         reader.words.add("test");
         reader.analyze();
         for (Phoneme p: reader.language.inventory) {
-            if (p.isEqual('t')) {
+            if (p.hasSound('t')) {
                 assertTrue(p.pre.get(0).sound.equals('#'));
                 assertTrue(p.pre.get(1).sound.equals('s'));
                 assertTrue(p.post.get(0).sound.equals('e'));

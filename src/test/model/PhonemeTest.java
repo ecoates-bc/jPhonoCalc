@@ -1,5 +1,6 @@
 package model;
 
+import model.phonology.Feature;
 import model.phonology.Phoneme;
 import model.phonology.Consonant;
 import org.junit.jupiter.api.BeforeEach;
@@ -11,18 +12,20 @@ import static org.junit.jupiter.api.Assertions.*;
 public class PhonemeTest {
     Phoneme ph;
     Phoneme qh;
+    Feature f;
 
     @BeforeEach
     void runBefore() {
         ph = new Consonant('p');
         qh = new Vowel('q');
+        f = new Feature("feature");
     }
 
     @Test
     void testSameSound() {
-        assertTrue(ph.isEqual('p'));
-        assertFalse(qh.isEqual('p'));
-        assertFalse(ph.isEqual('q'));
+        assertTrue(ph.hasSound('p'));
+        assertFalse(qh.hasSound('p'));
+        assertFalse(ph.hasSound('q'));
     }
 
     @Test
@@ -51,5 +54,13 @@ public class PhonemeTest {
         ph.addPre(qh);
         assertTrue(ph.getOppositeBefores().contains(qh));
         assertFalse(ph.getOppositeBefores().contains(ph));
+    }
+
+    @Test
+    void testFeatures() {
+        ph.addFeature("+", f);
+        qh.addFeature("-", f);
+        assertEquals(f, ph.features.get("+feature"));
+        assertEquals(f, qh.features.get("-feature"));
     }
 }

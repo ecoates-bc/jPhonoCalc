@@ -1,11 +1,8 @@
 package model;
 
 import model.exceptions.UnexpectedCharacterException;
+import model.phonology.*;
 import ui.io.LoaderSaver;
-import model.phonology.Consonant;
-import model.phonology.Language;
-import model.phonology.Phoneme;
-import model.phonology.Vowel;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -36,6 +33,11 @@ public class CorpusReader implements LanguageTool, LoaderSaver {
             Vowel newSound = new Vowel(c);
             language.addToInventory(newSound);
         }
+
+        for (int i = 3; i < sounds.size(); i += 4) {
+            addFeatures(sounds.get(i), i + 1, i + 2, sounds);
+        }
+
     }
 
     // REQUIRES: Valid pathway
@@ -88,6 +90,10 @@ public class CorpusReader implements LanguageTool, LoaderSaver {
                 acc += r.sound;
             }
             writer.println("Post: " + acc);
+
+            acc = "";
+            printFeatures(p, acc, writer);
+
             writer.println(" ");
         }
         writer.close();
@@ -102,7 +108,7 @@ public class CorpusReader implements LanguageTool, LoaderSaver {
         OuterLoop:
         for (Character c: word.toCharArray()) {
             for (Phoneme p: language.inventory) {
-                if (p.isEqual(c)) {
+                if (p.hasSound(c)) {
                     p.pre.add(before);
                     before.post.add(p);
                     before = p;
@@ -111,6 +117,35 @@ public class CorpusReader implements LanguageTool, LoaderSaver {
             }
             throw new UnexpectedCharacterException(c.toString());
         }
+    }
+
+    // MODIFIES: this
+    // EFFECTS: adds new features based on the input file
+    private void addFeatures(String name, int plus, int minus, List<String> s) {
+        Feature f = new Feature(name);
+        for (Character c: s.get(plus).toCharArray()) {
+            for (Phoneme p: language.inventory) {
+                if (p.hasSound(c)) {
+                    p.addFeature("+", f);
+                }
+            }
+        }
+        for (Character c: s.get(minus).toCharArray()) {
+            for (Phoneme p: language.inventory) {
+                if (p.hasSound(c)) {
+                    p.addFeature("-", f);
+                }
+            }
+        }
+    }
+
+    // EFFECTS: prints features; only exists because overridden methods can't exceed 20 lines?
+    private void printFeatures(Phoneme p, String acc, PrintWriter writer) {
+        for (String feature: p.features.keySet()) {
+            acc += feature;
+            acc += " ";
+        }
+        writer.println("Features: " + acc);
     }
 
     private static ArrayList<String> splitOnSpace(String line) {
