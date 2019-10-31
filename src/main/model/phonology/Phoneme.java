@@ -58,8 +58,12 @@ public abstract class Phoneme {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
         Phoneme phoneme = (Phoneme) o;
         return Objects.equals(sound, phoneme.sound);
     }

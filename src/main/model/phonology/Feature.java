@@ -50,8 +50,12 @@ public class Feature {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
         Feature feature = (Feature) o;
         return Objects.equals(name, feature.name);
     }
