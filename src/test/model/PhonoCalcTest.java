@@ -3,6 +3,7 @@ package model;
 import model.phonology.Consonant;
 import model.phonology.Language;
 import model.phonology.Phoneme;
+import model.phonology.Vowel;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -17,6 +18,8 @@ public class PhonoCalcTest {
 
     Phoneme xP = new Consonant("x");
     Phoneme tP = new Consonant("t");
+    Phoneme aP = new Vowel("a");
+    Phoneme sP = new Consonant("s");
 
     public double numer;
     public double denomer;
@@ -39,20 +42,30 @@ public class PhonoCalcTest {
     void testProbability() {
         numer = 1;
         denomer = 6;
-        assertEquals(reader.calculator.getProbability(xP), numer/denomer);
+        assertEquals(reader.calculator.getProbability(xP, reader.calculator.words.values()), numer/denomer);
         numer = 2;
         denomer = 3;
-        assertEquals(reader.calculator.getProbability(tP), numer/denomer);
+        assertEquals(reader.calculator.getProbability(tP, reader.calculator.words.values()), numer/denomer);
+
     }
 
     @Test
     void testEntropy() {
-        double probT = reader.calculator.getProbability(tP);
-        assertEquals(reader.calculator.getEntropy(language.inventory), 5.578445831169866);
+        assertEquals(reader.calculator.getEntropy(language.inventory, reader.calculator.words.values()),
+                5.578445831169866);
     }
 
     @Test
-    void testNaN() {
-        System.out.println();
+    void testVoidFunctionalLoad() {
+        assertEquals(reader.calculator.calculateFunctionalLoad(xP, aP, language.inventory), 0);
+    }
+
+    @Test
+    void testFunctionalLoad() {
+        double small = reader.calculator.calculateFunctionalLoad(xP, tP, language.inventory);
+        double large = reader.calculator.calculateFunctionalLoad(tP, sP, language.inventory);
+
+        // functional load values are negative
+        System.out.println(small + ", " + large);
     }
 }
