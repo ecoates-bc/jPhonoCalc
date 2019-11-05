@@ -45,4 +45,36 @@ public class PhonoCalc {
         return phonemes;
     }
 
+    // EFFECTS: finds the probability that a phoneme is in a given word in the corpus
+    //          # of words with phoneme in it / # of words in corpus
+    public double getProbability(Phoneme p) {
+        double withP = 0;
+        OuterLoop:
+        for (List<Phoneme> word: words.values()) {
+            for (Phoneme q: word) {
+                if (q.equals(p)) {
+                    withP++;
+                    continue OuterLoop;
+                }
+            }
+        }
+        return withP / words.values().size();
+    }
+
+    // REQUIRES: phonemeList has unique characters in it, e.g: language inventory
+    // EFFECTS: returns the entropy of system with inventory phonemeList
+    public double getEntropy(List<Phoneme> phonemeList) {
+        double sum = 0;
+        for (Phoneme p: phonemeList) {
+            double probP = getProbability(p);
+            double step;
+            if (probP == 0) {
+                step = 1;
+            } else {
+                step = probP * (Math.log(probP) / Math.log(2));
+            }
+            sum += step;
+        }
+        return sum;
+    }
 }

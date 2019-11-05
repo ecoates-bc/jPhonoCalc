@@ -1,5 +1,5 @@
-p,b,v,f,s,z,t,d,k,c,g,m,n,l,r,y,w,q,x,h,j
 a,e,i,o,u
+p,b,v,f,s,z,t,d,k,c,g,m,n,l,r,y,w,q,x,h,j
 
 syllabic
 a,e,i,o,u
