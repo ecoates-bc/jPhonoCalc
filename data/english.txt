@@ -1,18 +1,18 @@
-pbvfsztdkcgmnlrywqxhj
-aeiou
+p,b,v,f,s,z,t,d,k,c,g,m,n,l,r,y,w,q,x,h,j
+a,e,i,o,u
 
 syllabic
-aeiou
-pbvfsztdkcgmnlrywqxhj
+a,e,i,o,u
+p,b,v,f,s,z,t,d,k,c,g,m,n,l,r,y,w,q,x,h,j
 
 consonantal
-pbvfsztdkcgmnlrqxj
-aeiouywh
+p,b,v,f,s,z,t,d,k,c,g,m,n,l,r,q,x,j
+a,e,i,o,u,y,w,h
 
 approximant
-aeioulryw
-pbvfsztdkcgmnqxhj
+a,e,i,o,u,l,r,y,w
+p,b,v,f,s,z,t,d,k,c,g,m,n,q,x,h,j
 
 sonorant
-aeioulrywnm
-pbvfsztdkcgqxhj
+a,e,i,o,u,l,r,y,w,n,m
+p,b,v,f,s,z,t,d,k,c,g,q,x,h,j

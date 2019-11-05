@@ -4,34 +4,38 @@ import java.util.*;
 
 // Represents a single sound
 public abstract class Phoneme {
-    public Character sound;
+    public String sound;
     public List<Phoneme> pre;
     public List<Phoneme> post;
     public Map<String, Feature> features = new HashMap<>();
 
     // MODIFIES: this
     // EFFECTS: adds a new sound to the inventory
-    public Phoneme(Character sound) {
+    public Phoneme(String sound) {
         this.sound = sound;
         pre = new ArrayList<>();
         post = new ArrayList<>();
     }
 
     // EFFECTS: returns true if this sound is the same as a sound found in the user input, false otherwise
-    public boolean hasSound(Character s) {
+    public boolean hasSound(String s) {
         return sound.equals(s);
     }
 
     // MODIFIES: this
     // EFFECTS: adds observed proceeding sound
     public void addPre(Phoneme c) {
-        pre.add(c);
+        if (!pre.contains(c)) {
+            pre.add(c);
+        }
     }
 
     // MODIFIES: this
     // EFFECTS: adds observed succeeding sound
     public void addPost(Phoneme c) {
-        post.add(c);
+        if (!post.contains(c)) {
+            post.add(c);
+        }
     }
 
     public abstract List<Phoneme> getOppositeBefores();

@@ -17,8 +17,8 @@ public class LanguageTest {
     @BeforeEach
     void runBefore() {
         inventory = new Language();
-        ph = new Consonant('p');
-        qh = new Consonant('q');
+        ph = new Consonant("p");
+        qh = new Consonant("q");
     }
 
     @Test

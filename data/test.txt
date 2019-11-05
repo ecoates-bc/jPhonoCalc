@@ -1,3 +1,6 @@
-test words such
-text input 
-output
+test 1 t e s t
+words 1 w o r d s
+such 1 s u c h
+text 1 t e x t
+input 1 i n p u t
+output 1 o u t p u t

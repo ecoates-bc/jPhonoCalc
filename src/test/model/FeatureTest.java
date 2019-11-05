@@ -17,8 +17,8 @@ public class FeatureTest {
 
     @BeforeEach
     void runBefore() {
-        plus = new Consonant('p');
-        minus = new Vowel('u');
+        plus = new Consonant("p");
+        minus = new Vowel("u");
         f = new Feature("feature");
         g = new Feature("feature");
     }

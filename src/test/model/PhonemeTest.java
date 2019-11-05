@@ -16,16 +16,16 @@ public class PhonemeTest {
 
     @BeforeEach
     void runBefore() {
-        ph = new Consonant('p');
-        qh = new Vowel('q');
+        ph = new Consonant("p");
+        qh = new Vowel("q");
         f = new Feature("feature");
     }
 
     @Test
     void testSameSound() {
-        assertTrue(ph.hasSound('p'));
-        assertFalse(qh.hasSound('p'));
-        assertFalse(ph.hasSound('q'));
+        assertTrue(ph.hasSound("p"));
+        assertFalse(qh.hasSound("p"));
+        assertFalse(ph.hasSound("q"));
     }
 
     @Test

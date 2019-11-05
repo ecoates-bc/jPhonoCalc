@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Vowel extends Phoneme {
-    public Vowel(Character sound) {
+    public Vowel(String sound) {
         super(sound);
     }
 

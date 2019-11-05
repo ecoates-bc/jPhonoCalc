@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Consonant extends Phoneme {
-    public Consonant(Character sound) {
+    public Consonant(String sound) {
         super(sound);
     }
 
