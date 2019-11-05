@@ -73,24 +73,35 @@ public class CorpusReader implements Loader, Saver {
     @Override
     public void save(String filename) throws FileNotFoundException, UnsupportedEncodingException {
         PrintWriter writer = new PrintWriter("data/" + filename + ".txt", "UTF-8");
-        for (Phoneme p: language.inventory) {
-            String acc = "";
-            writer.println(p.sound);
-            for (Phoneme q: p.pre) {
-                acc += q.sound + ", ";
-            }
-            writer.println("Pre: " + acc);
-            acc = "";
-            for (Phoneme r: p.post) {
-                acc += r.sound + ", ";
-            }
-            writer.println("Post: " + acc);
 
-            acc = "";
-            printFeatures(p, acc, writer);
+        Phoneme pP = new Consonant("P");
+        Phoneme bP = new Consonant("B");
+        Phoneme chP = new Consonant("CH");
+        Phoneme kP = new Consonant("K");
+        double functionalLoad1 = calculator.calculateFunctionalLoad(pP, bP, language.inventory);
+        double functionalLoad2 = calculator.calculateFunctionalLoad(chP, kP, language.inventory);
 
-            writer.println(" ");
-        }
+        writer.println("Functional load of P and B: " + functionalLoad1);
+        writer.println("Functional load of CH and K: " + functionalLoad2);
+
+//        for (Phoneme p: language.inventory) {
+//            String acc = "";
+//            writer.println(p.sound);
+//            for (Phoneme q: p.pre) {
+//                acc += q.sound + ", ";
+//            }
+//            writer.println("Pre: " + acc);
+//            acc = "";
+//            for (Phoneme r: p.post) {
+//                acc += r.sound + ", ";
+//            }
+//            writer.println("Post: " + acc);
+//
+//            acc = "";
+//            printFeatures(p, acc, writer);
+//
+//            writer.println(" ");
+//        }
         writer.close();
     }
 
