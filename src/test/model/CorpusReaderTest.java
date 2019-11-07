@@ -46,16 +46,17 @@ public class CorpusReaderTest {
 
     // TODO: test anlyze
 
-    @Test
-    void testOutput() throws IOException {
-        reader.language.inventory.add(pa);
-        reader.language.inventory.add(pe);
-        reader.language.inventory.add(pi);
-        reader.save("lang");
-
-        List<String> data = Files.readAllLines(Paths.get("data/lang.txt"));
-        assertTrue(data.get(0).equals("p"));
-    }
+    // TODO: refactor this
+//    @Test
+//    void testOutput() throws IOException {
+//        reader.language.inventory.add(pa);
+//        reader.language.inventory.add(pe);
+//        reader.language.inventory.add(pi);
+//        reader.save("lang");
+//
+//        List<String> data = Files.readAllLines(Paths.get("data/lang.txt"));
+//        assertTrue(data.get(0).equals("p"));
+//    }
 
     // TODO: implement these in PhonoCalc
 //    @Test

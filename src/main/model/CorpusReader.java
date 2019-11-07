@@ -74,12 +74,12 @@ public class CorpusReader implements Loader, Saver {
     public void save(String filename) throws FileNotFoundException, UnsupportedEncodingException {
         PrintWriter writer = new PrintWriter("data/" + filename + ".txt", "UTF-8");
 
-        Phoneme pP = new Consonant("P");
-        Phoneme bP = new Consonant("B");
+        Phoneme phP = new Consonant("P");
+        Phoneme bhP = new Consonant("B");
         Phoneme chP = new Consonant("CH");
-        Phoneme kP = new Consonant("K");
-        double functionalLoad1 = calculator.calculateFunctionalLoad(pP, bP, language.inventory);
-        double functionalLoad2 = calculator.calculateFunctionalLoad(chP, kP, language.inventory);
+        Phoneme khP = new Consonant("K");
+        double functionalLoad1 = calculator.calculateFunctionalLoad(phP, bhP, language.inventory);
+        double functionalLoad2 = calculator.calculateFunctionalLoad(chP, khP, language.inventory);
 
         writer.println("Functional load of P and B: " + functionalLoad1);
         writer.println("Functional load of CH and K: " + functionalLoad2);
