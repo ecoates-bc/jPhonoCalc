@@ -71,43 +71,29 @@ public class CorpusReader implements Loader, Saver {
     // EFFECTS: Saves a file containing a list of phonemes from the inventory, named filename
 
     @Override
-    public void save(String filename) throws FileNotFoundException, UnsupportedEncodingException {
-        PrintWriter writer = new PrintWriter("data/" + filename + ".txt", "UTF-8");
+    public void save(String filename) {
+        for (Phoneme p: language.inventory) {
+            String acc = "";
+            System.out.println(p.sound);
+            for (Phoneme q: p.pre) {
+                acc += q.sound + ", ";
+            }
+            System.out.println("Pre: " + acc);
+            acc = "";
+            for (Phoneme r: p.post) {
+                acc += r.sound + ", ";
+            }
+            System.out.println("Post: " + acc);
 
-        Phoneme phP = new Consonant("P");
-        Phoneme bhP = new Consonant("B");
-        Phoneme chP = new Consonant("CH");
-        Phoneme khP = new Consonant("K");
-        double functionalLoad1 = calculator.calculateFunctionalLoad(phP, bhP, language.inventory);
-        double functionalLoad2 = calculator.calculateFunctionalLoad(chP, khP, language.inventory);
+            acc = "";
+            printFeatures(p, acc);
 
-        writer.println("Functional load of P and B: " + functionalLoad1);
-        writer.println("Functional load of CH and K: " + functionalLoad2);
-
-//        for (Phoneme p: language.inventory) {
-//            String acc = "";
-//            writer.println(p.sound);
-//            for (Phoneme q: p.pre) {
-//                acc += q.sound + ", ";
-//            }
-//            writer.println("Pre: " + acc);
-//            acc = "";
-//            for (Phoneme r: p.post) {
-//                acc += r.sound + ", ";
-//            }
-//            writer.println("Post: " + acc);
-//
-//            acc = "";
-//            printFeatures(p, acc, writer);
-//
-//            writer.println(" ");
-//        }
-        writer.close();
+        }
     }
 
     // MODIFIES: this
     // EFFECTS: adds new features based on the input file
-    private void addFeatures(String name, int plus, int minus, List<String> s) {
+    public void addFeatures(String name, int plus, int minus, List<String> s) {
         Feature f = new Feature(name);
         for (String c: s.get(plus).split(",")) {
             for (Phoneme p: language.inventory) {
@@ -126,12 +112,12 @@ public class CorpusReader implements Loader, Saver {
     }
 
     // EFFECTS: prints features; only exists because overridden methods can't exceed 20 lines?
-    private void printFeatures(Phoneme p, String acc, PrintWriter writer) {
+    private void printFeatures(Phoneme p, String acc) {
         for (String feature: p.features.keySet()) {
             acc += feature;
             acc += " ";
         }
-        writer.println("Features: " + acc);
+        System.out.println("Features: " + acc);
     }
 
     private static ArrayList<String> splitOnSpace(String line) {

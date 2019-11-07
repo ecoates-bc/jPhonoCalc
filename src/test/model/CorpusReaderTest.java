@@ -13,8 +13,7 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.assertTrue;
-import static org.junit.jupiter.api.Assertions.fail;
+import static org.junit.jupiter.api.Assertions.*;
 
 public class CorpusReaderTest {
     CorpusReader reader;
@@ -44,17 +43,22 @@ public class CorpusReaderTest {
         assertTrue(reader.calculator.words.containsKey("output"));
     }
 
+    @Test
+    void testAddFeatures() throws IOException {
+        List<String> sounds = Files.readAllLines(Paths.get("data/english.txt"));
+        reader.addFeatures("syllabic",4,5,sounds);
+        assertFalse(reader.language.inventory.get(0).features.isEmpty());
+    }
+
     // TODO: refactor this
-//    @Test
-//    void testOutput() throws IOException {
-//        reader.language.inventory.add(pa);
-//        reader.language.inventory.add(pe);
-//        reader.language.inventory.add(pi);
-//        reader.save("lang");
-//
-//        List<String> data = Files.readAllLines(Paths.get("data/lang.txt"));
-//        assertTrue(data.get(0).equals("p"));
-//    }
+    @Test
+    void testOutput() throws IOException {
+        reader.language.inventory.add(pa);
+        reader.language.inventory.add(pe);
+        reader.language.inventory.add(pi);
+        reader.save("lang");
+
+    }
 
     // TODO: implement these in PhonoCalc
 //    @Test

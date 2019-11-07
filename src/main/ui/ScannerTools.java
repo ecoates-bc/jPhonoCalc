@@ -1,9 +1,12 @@
 package ui;
 
 import model.CorpusReader;
+import model.phonology.Consonant;
+import model.phonology.Phoneme;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.io.UnsupportedEncodingException;
 import java.util.Scanner;
 
@@ -31,5 +34,22 @@ public class ScannerTools {
         System.out.println("Name output file:");
         path = input.nextLine();
         reader.save(path);
+        printFunctionalLoad(path, reader);
+    }
+
+    private void printFunctionalLoad(String filename, CorpusReader reader) throws FileNotFoundException,
+            UnsupportedEncodingException {
+        PrintWriter writer = new PrintWriter("data/" + filename + ".txt", "UTF-8");
+
+        Phoneme phP = new Consonant("P");
+        Phoneme bhP = new Consonant("B");
+        Phoneme chP = new Consonant("CH");
+        Phoneme khP = new Consonant("K");
+        double functionalLoad1 = reader.calculator.calculateFunctionalLoad(phP, bhP, reader.language.inventory);
+        double functionalLoad2 = reader.calculator.calculateFunctionalLoad(chP, khP, reader.language.inventory);
+
+        writer.println("Functional load of P and B: " + functionalLoad1);
+        writer.println("Functional load of CH and K: " + functionalLoad2);
+        writer.close();
     }
 }
