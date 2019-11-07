@@ -44,8 +44,6 @@ public class CorpusReaderTest {
         assertTrue(reader.calculator.words.containsKey("output"));
     }
 
-    // TODO: test anlyze
-
     // TODO: refactor this
 //    @Test
 //    void testOutput() throws IOException {
