@@ -1,22 +1,26 @@
 package model;
 
 import model.exceptions.UnexpectedCharacterException;
+import model.observer.LanguageObserver;
 import model.phonology.Consonant;
 import model.phonology.Phoneme;
 
 import java.util.*;
 
-public class PhonoCalc {
+public class PhonoCalc extends Observable {
     public Map<String, List<Phoneme>> words;
 
     public PhonoCalc() {
         words = new HashMap<>();
+        addObserver(new LanguageObserver());
     }
 
     // REQUIRES: valid word
     // MODIFIES: this
     // EFFECTS: adds word to key, list of phonemes to value
     public void addWord(String word, List<Phoneme> phonemes) {
+        setChanged();
+        notifyObservers(word);
         words.put(word, phonemes);
     }
 
@@ -66,19 +70,19 @@ public class PhonoCalc {
             double probP = getProbability(p, values);
             double step;
             if (probP == 0) {
-                step = 1;
+                continue;
             } else {
                 step = probP * (Math.log(probP) / Math.log(2));
             }
             sum += step;
         }
-        return sum;
+        return -sum;
     }
 
-    // MODIFIES: this.words (temporarily)
-    // EFFECTS: calculates the functional load of two phonemes
+    // EFFECTS: calculates the functional load of two phonemes (change in entropy of system after two sounds are merged)
     public double calculateFunctionalLoad(Phoneme p, Phoneme q, List<Phoneme> phonemeList) {
         Collection<List<Phoneme>> mergedList = new ArrayList<>();
+        List<Phoneme> mergedInventory = new ArrayList<>(phonemeList);
         for (List<Phoneme> word: words.values()) {
             List<Phoneme> mergedWord = new ArrayList<>();
             for (Phoneme sound: word) {
@@ -91,7 +95,6 @@ public class PhonoCalc {
             mergedList.add(mergedWord);
         }
 
-        List<Phoneme> mergedInventory = phonemeList;
         mergedInventory.remove(q);
 
         double beforeEntropy = getEntropy(phonemeList, words.values());

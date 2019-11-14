@@ -3,6 +3,7 @@ package ui;
 import model.CorpusReader;
 import model.phonology.Consonant;
 import model.phonology.Phoneme;
+import org.json.JSONException;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -23,7 +24,7 @@ public class ScannerTools {
         System.out.println("Input file path:");
         path = "data/" + input.nextLine();
         try {
-            reader.read(path);
+            reader.readFromAPI(path);
         } catch (IOException e) {
             System.out.println("File not found. Try again.");
             handleUpload(reader);
@@ -41,15 +42,15 @@ public class ScannerTools {
             UnsupportedEncodingException {
         PrintWriter writer = new PrintWriter("data/" + filename + ".txt", "UTF-8");
 
-        Phoneme phP = new Consonant("P");
-        Phoneme bhP = new Consonant("B");
-        Phoneme chP = new Consonant("CH");
-        Phoneme khP = new Consonant("K");
-        double functionalLoad1 = reader.calculator.calculateFunctionalLoad(phP, bhP, reader.language.inventory);
-        double functionalLoad2 = reader.calculator.calculateFunctionalLoad(chP, khP, reader.language.inventory);
+        Phoneme phP = new Consonant("m");
+        Phoneme bhP = new Consonant("n");
+        Phoneme chP = new Consonant("s");
+        Phoneme khP = new Consonant("ʃ");
+        double functionalLoad1 = reader.getFLoad(phP, bhP);
+        double functionalLoad2 = reader.getFLoad(chP, khP);
 
-        writer.println("Functional load of P and B: " + functionalLoad1);
-        writer.println("Functional load of CH and K: " + functionalLoad2);
+        writer.println("Functional load of m and n: " + functionalLoad1);
+        writer.println("Functional load of s and ʃ: " + functionalLoad2);
         writer.close();
     }
 }

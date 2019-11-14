@@ -2,13 +2,12 @@ package model;
 
 import model.exceptions.UnexpectedCharacterException;
 import model.phonology.*;
+import network.ApiReader;
+import org.json.JSONException;
 import ui.io.Loader;
 import ui.io.Saver;
 
-import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.io.PrintWriter;
-import java.io.UnsupportedEncodingException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.ArrayList;
@@ -68,6 +67,28 @@ public class CorpusReader implements Loader, Saver {
         }
     }
 
+    // MODIFIES: this.words
+    // EFFECTS: like read() but using the network package
+    public void readFromAPI(String path) throws IOException {
+        List<String> data = Files.readAllLines(Paths.get(path));
+        String[] lines = data.toArray(new String[0]);
+
+        for (String s: lines) {
+            try {
+                ApiReader apiReader = new ApiReader(s);
+                List<Phoneme> phonemes;
+                try {
+                    phonemes = calculator.analyzeWord(apiReader.getipalist(),language.inventory);
+                    calculator.addWord(s, phonemes);
+                } catch (UnexpectedCharacterException e) {
+                    continue;
+                }
+            } catch (JSONException e) {
+                continue;
+            }
+        }
+    }
+
     // EFFECTS: Saves a file containing a list of phonemes from the inventory, named filename
 
     @Override
@@ -111,6 +132,11 @@ public class CorpusReader implements Loader, Saver {
         }
     }
 
+    //EFFECTS: calculate the functional load of two phonemes, see PhonoCalc for more info
+    public double getFLoad(Phoneme p, Phoneme q) {
+        return calculator.calculateFunctionalLoad(p, q, language.inventory);
+    }
+
     // EFFECTS: prints features; only exists because overridden methods can't exceed 20 lines?
     private void printFeatures(Phoneme p, String acc) {
         for (String feature: p.features.keySet()) {
@@ -120,9 +146,9 @@ public class CorpusReader implements Loader, Saver {
         System.out.println("Features: " + acc);
     }
 
+
     private static ArrayList<String> splitOnSpace(String line) {
         String[] splits = line.split(" ");
         return new ArrayList<>(Arrays.asList(splits));
     }
-
 }
