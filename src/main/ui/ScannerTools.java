@@ -3,6 +3,7 @@ package ui;
 import model.CorpusReader;
 import model.phonology.Consonant;
 import model.phonology.Phoneme;
+import model.phonology.Vowel;
 import org.json.JSONException;
 
 import java.io.FileNotFoundException;
@@ -24,7 +25,7 @@ public class ScannerTools {
         System.out.println("Input file path:");
         path = "data/" + input.nextLine();
         try {
-            reader.readFromAPI(path);
+            reader.read(path);
         } catch (IOException e) {
             System.out.println("File not found. Try again.");
             handleUpload(reader);
@@ -35,7 +36,7 @@ public class ScannerTools {
         System.out.println("Name output file:");
         path = input.nextLine();
         reader.save(path);
-        printFunctionalLoad(path, reader);
+        printProbabilities(path, reader);
     }
 
     private void printFunctionalLoad(String filename, CorpusReader reader) throws FileNotFoundException,
@@ -53,4 +54,25 @@ public class ScannerTools {
         writer.println("Functional load of s and ʃ: " + functionalLoad2);
         writer.close();
     }
+
+    private void printProbabilities(String filename, CorpusReader reader) throws FileNotFoundException,
+            UnsupportedEncodingException {
+        PrintWriter writer = new PrintWriter("data/" + filename + ".txt", "UTF-8");
+
+        Phoneme mhP = new Consonant("m");
+        Phoneme shP = new Consonant("s");
+        Phoneme ahP = new Vowel("ɑ");
+        Phoneme ihP = new Vowel("i");
+        double probabilityM = reader.getProbability(mhP);
+        double probabilityP = reader.getProbability(shP);
+        double probabilityA = reader.getProbability(ahP);
+        double probabilityI = reader.getProbability(ihP);
+
+        writer.println("Probability of [m]: " + probabilityM);
+        writer.println("Probability of [s]: " + probabilityP);
+        writer.println("Probability of [ɑ]: " + probabilityA);
+        writer.println("Probability of [i]: " + probabilityI);
+        writer.close();
+    }
+
 }

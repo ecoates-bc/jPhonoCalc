@@ -50,16 +50,21 @@ public class PhonoCalc extends Observable {
     //          # of words with phoneme in it / # of words in corpus
     public double getProbability(Phoneme p, Collection<List<Phoneme>> values) {
         double withP = 0;
+        double totalSegments = 0;
         OuterLoop:
         for (List<Phoneme> word: values) {
             for (Phoneme q: word) {
                 if (q.equals(p)) {
                     withP++;
-                    continue OuterLoop;
                 }
+                totalSegments++;
             }
+            // The number of segments is increased by 2, to account for word boundaries
+            totalSegments = totalSegments + 2;
         }
-        return withP / words.values().size();
+
+        System.out.println(withP + " by " + totalSegments + " = " + withP / totalSegments);
+        return withP / totalSegments;
     }
 
     // REQUIRES: phonemeList has unique characters in it, e.g: language inventory

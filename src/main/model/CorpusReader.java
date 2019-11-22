@@ -137,6 +137,11 @@ public class CorpusReader implements Loader, Saver {
         return calculator.calculateFunctionalLoad(p, q, language.inventory);
     }
 
+    // EFFECTS: calculates type-based probability
+    public double getProbability(Phoneme p) {
+        return calculator.getProbability(p, calculator.words.values());
+    }
+
     // EFFECTS: prints features; only exists because overridden methods can't exceed 20 lines?
     private void printFeatures(Phoneme p, String acc) {
         for (String feature: p.features.keySet()) {
