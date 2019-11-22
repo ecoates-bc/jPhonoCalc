@@ -1,7 +1,9 @@
 package ui;
 
 import model.CorpusReader;
+import model.exceptions.NoCorpusUploadedException;
 import model.phonology.Consonant;
+import model.phonology.Language;
 import model.phonology.Phoneme;
 import model.phonology.Vowel;
 import org.json.JSONException;
@@ -10,33 +12,41 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.io.UnsupportedEncodingException;
+import java.util.ArrayList;
 import java.util.Scanner;
 
-public class ScannerTools {
-    public Scanner input;
+public class FileTools {
     private String path;
+    private CorpusReader reader;
+    private Language language;
 
-    public ScannerTools() {
-        input = new Scanner(System.in);
+    public FileTools() {
         path = "";
+        language = new Language();
     }
 
-    public void handleUpload(CorpusReader reader) {
-        System.out.println("Input file path:");
-        path = "data/" + input.nextLine();
-        try {
-            reader.read(path);
-        } catch (IOException e) {
-            System.out.println("File not found. Try again.");
-            handleUpload(reader);
+    public void handleUpload(String path) throws IOException {
+        if (this.reader == null) {
+            this.path = path;
+            reader = new CorpusReader(language, path);
+        } else {
+            throw new IOException();
+        }
+    }
+
+    public ArrayList<String> getPhonemes() throws NoCorpusUploadedException {
+        if (reader != null) {
+            return language.getPhonemes();
+        } else {
+            throw new NoCorpusUploadedException();
         }
     }
 
     public void handleSave(CorpusReader reader) throws FileNotFoundException, UnsupportedEncodingException {
-        System.out.println("Name output file:");
-        path = input.nextLine();
-        reader.save(path);
-        printProbabilities(path, reader);
+//        System.out.println("Name output file:");
+//        path = input.nextLine();
+//        reader.save(path);
+//        printProbabilities(path, reader);
     }
 
     private void printFunctionalLoad(String filename, CorpusReader reader) throws FileNotFoundException,

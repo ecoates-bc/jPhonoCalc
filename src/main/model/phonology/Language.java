@@ -30,4 +30,23 @@ public class Language {
     public void addToInventory(Phoneme p) {
         inventory.add(p);
     }
+
+    // EFFECTS: returns a list of consonants, then vowels
+    public ArrayList<String> getPhonemes() {
+        ArrayList<String> phonemes = new ArrayList<>();
+        String consonants = "Consonants: ";
+        String vowels = "Vowels: ";
+
+        for (Phoneme p: inventory) {
+            if (p instanceof Vowel) {
+                vowels += p.sound;
+            } else {
+                consonants += p.sound;
+            }
+        }
+        phonemes.add(consonants);
+        phonemes.add(vowels);
+
+        return phonemes;
+    }
 }
