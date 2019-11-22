@@ -17,12 +17,12 @@ public class Language {
     }
 
     // EFFECTS: returns a string of all the sounds in the inventory
-    public String getInventory() {
-        String s = new String("");
+    public ArrayList<String> getInventory() {
+        ArrayList<String> phonemes = new ArrayList<>();
         for (Phoneme p: inventory) {
-            s += p.sound;
+            phonemes.add(p.sound);
         }
-        return s;
+        return phonemes;
     }
 
     // MODIFIES: this
@@ -32,16 +32,16 @@ public class Language {
     }
 
     // EFFECTS: returns a list of consonants, then vowels
-    public ArrayList<String> getPhonemes() {
+    public ArrayList<String> viewPhonemesAsString() {
         ArrayList<String> phonemes = new ArrayList<>();
         String consonants = "Consonants: ";
         String vowels = "Vowels: ";
 
         for (Phoneme p: inventory) {
             if (p instanceof Vowel) {
-                vowels += p.sound;
+                vowels += " " + p.sound;
             } else {
-                consonants += p.sound;
+                consonants +=  " " + p.sound;
             }
         }
         phonemes.add(consonants);

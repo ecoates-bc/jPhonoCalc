@@ -1,5 +1,6 @@
 package model;
 
+import model.exceptions.NoCorpusUploadedException;
 import model.exceptions.UnexpectedCharacterException;
 import model.phonology.*;
 import network.ApiReader;
@@ -133,8 +134,12 @@ public class CorpusReader implements Loader, Saver {
     }
 
     //EFFECTS: calculate the functional load of two phonemes, see PhonoCalc for more info
-    public double getFLoad(Phoneme p, Phoneme q) {
-        return calculator.calculateFunctionalLoad(p, q, language.inventory);
+    public double getFLoad(Phoneme p, Phoneme q) throws NoCorpusUploadedException {
+        if (calculator.words.values().size() > 0) {
+            return calculator.calculateFunctionalLoad(p, q, language.inventory);
+        } else {
+            throw new NoCorpusUploadedException();
+        }
     }
 
     // EFFECTS: calculates type-based probability

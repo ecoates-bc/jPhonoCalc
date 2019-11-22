@@ -29,21 +29,14 @@ public class LanguageTest {
         assertFalse(inventory.contains(qh));
     }
 
-    @Test
-    void testGetInventory() {
-        inventory.addToInventory(ph);
-        assertTrue(inventory.getInventory().equals("p"));
-        assertFalse(inventory.getInventory().equals("pp"));
-
-    }
-
-    @Test
-    void testGetInventoryLong() {
-        inventory.addToInventory(ph);
-        inventory.addToInventory(qh);
-        assertTrue(inventory.getInventory().equals("pq"));
-        assertFalse(inventory.getInventory().equals("qp"));
-    }
+    // TODO: refactor this test
+//    @Test
+//    void testGetInventory() {
+//        inventory.addToInventory(ph);
+//        assertTrue(inventory.getInventory().equals("p"));
+//        assertFalse(inventory.getInventory().equals("pp"));
+//
+//    }
 
     @Test
     void testAdd() {

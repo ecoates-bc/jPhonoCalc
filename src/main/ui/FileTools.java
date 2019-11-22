@@ -2,18 +2,18 @@ package ui;
 
 import model.CorpusReader;
 import model.exceptions.NoCorpusUploadedException;
+import model.exceptions.NoStarterUploadedException;
+import model.exceptions.UnexpectedCharacterException;
 import model.phonology.Consonant;
 import model.phonology.Language;
 import model.phonology.Phoneme;
 import model.phonology.Vowel;
-import org.json.JSONException;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
-import java.util.Scanner;
 
 public class FileTools {
     private String path;
@@ -34,12 +34,57 @@ public class FileTools {
         }
     }
 
-    public ArrayList<String> getPhonemes() throws NoCorpusUploadedException {
-        if (reader != null) {
-            return language.getPhonemes();
+    public void handleRead(String path) throws IOException, NoStarterUploadedException {
+        if (this.reader != null) {
+            this.path = path;
+            reader.read(path);
         } else {
-            throw new NoCorpusUploadedException();
+            throw new NoStarterUploadedException();
         }
+    }
+
+    public void getApiValues(String path) throws IOException, NoStarterUploadedException {
+        if (this.reader != null) {
+            reader.readFromAPI(path);
+        } else {
+            throw new NoStarterUploadedException();
+        }
+    }
+
+    public ArrayList<String> viewPhonemesAsString() throws NoStarterUploadedException {
+        if (reader != null) {
+            return language.viewPhonemesAsString();
+        } else {
+            throw new NoStarterUploadedException();
+        }
+    }
+
+    public ArrayList<String> getInventory() throws NoStarterUploadedException {
+        if (reader != null) {
+            return language.getInventory();
+        } else {
+            throw new NoStarterUploadedException();
+        }
+    }
+
+    public String getFLoadAsString(String a, String b) throws UnexpectedCharacterException, NoCorpusUploadedException {
+        Phoneme first = null;
+        Phoneme second = null;
+
+        for (Phoneme p: language.inventory) {
+            if (a == p.sound) {
+                first = p;
+            } else if (b == p.sound) {
+                second = p;
+            }
+        }
+        if (a == null || b == null) {
+            throw new UnexpectedCharacterException();
+        }
+
+        double fload = reader.getFLoad(first, second);
+
+        return "Functional load of " + a + " and " + b + ": " + fload;
     }
 
     public void handleSave(CorpusReader reader) throws FileNotFoundException, UnsupportedEncodingException {
@@ -50,7 +95,7 @@ public class FileTools {
     }
 
     private void printFunctionalLoad(String filename, CorpusReader reader) throws FileNotFoundException,
-            UnsupportedEncodingException {
+            UnsupportedEncodingException, NoCorpusUploadedException {
         PrintWriter writer = new PrintWriter("data/" + filename + ".txt", "UTF-8");
 
         Phoneme phP = new Consonant("m");
