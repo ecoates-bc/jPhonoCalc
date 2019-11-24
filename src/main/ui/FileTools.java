@@ -3,6 +3,7 @@ package ui;
 import model.CorpusReader;
 import model.exceptions.NoCorpusUploadedException;
 import model.exceptions.NoStarterUploadedException;
+import model.exceptions.OverwritingStarterException;
 import model.exceptions.UnexpectedCharacterException;
 import model.phonology.Consonant;
 import model.phonology.Language;
@@ -22,16 +23,20 @@ public class FileTools {
 
     public FileTools() {
         path = "";
-        language = new Language();
     }
 
-    public void handleUpload(String path) throws IOException {
+    public void handleUpload(String path) throws IOException, OverwritingStarterException {
         if (this.reader == null) {
             this.path = path;
+            language = new Language();
             reader = new CorpusReader(language, path);
         } else {
-            throw new IOException();
+            throw new OverwritingStarterException();
         }
+    }
+
+    public void overwriteReader() {
+        this.reader = null;
     }
 
     public void handleRead(String path) throws IOException, NoStarterUploadedException {

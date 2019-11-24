@@ -2,6 +2,7 @@ package ui;
 
 import model.exceptions.NoCorpusUploadedException;
 import model.exceptions.NoStarterUploadedException;
+import model.exceptions.OverwritingStarterException;
 import model.exceptions.UnexpectedCharacterException;
 
 import javax.swing.*;
@@ -44,6 +45,7 @@ public class Window extends JFrame implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         menuBarActions(e);
+        loadCorpusActions(e);
         menuBarActions2(e);
         menuBarActions3(e);
     }
@@ -55,8 +57,22 @@ public class Window extends JFrame implements ActionListener {
                 fileTools.handleUpload(path);
             } catch (IOException ex) {
                 JOptionPane.showMessageDialog(null, "Action not supported.");
+            } catch (OverwritingStarterException ex) {
+                int response = JOptionPane.showConfirmDialog(null, "Overwriting corpus starter. Are you sure?");
+                if (response == JOptionPane.OK_OPTION) {
+                    fileTools.overwriteReader();
+                    try {
+                        fileTools.handleUpload(path);
+                    } catch (Exception e1) {
+                        JOptionPane.showMessageDialog(null, "Action not supported.");
+                    }
+                }
             }
-        } else if (e.getSource() == menuBar.loadCorpus) {
+        }
+    }
+
+    private void loadCorpusActions(ActionEvent e) {
+        if (e.getSource() == menuBar.loadCorpus) {
             String path = optionDialog();
             try {
                 fileTools.handleRead(path);
