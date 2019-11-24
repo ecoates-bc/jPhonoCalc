@@ -73,23 +73,20 @@ public class FileTools {
     }
 
     public String getFLoadAsString(String a, String b) throws UnexpectedCharacterException, NoCorpusUploadedException {
-        Phoneme first = null;
-        Phoneme second = null;
-
-        for (Phoneme p: language.inventory) {
-            if (a == p.sound) {
-                first = p;
-            } else if (b == p.sound) {
-                second = p;
-            }
-        }
-        if (a == null || b == null) {
-            throw new UnexpectedCharacterException();
-        }
+        Phoneme first = reader.getPhonemeFromString(a);
+        Phoneme second = reader.getPhonemeFromString(b);
 
         double fload = reader.getFLoad(first, second);
 
         return "Functional load of " + a + " and " + b + ": " + fload;
+    }
+
+    public String getProbabilityAsString(String s) throws UnexpectedCharacterException, NoCorpusUploadedException {
+        Phoneme p = reader.getPhonemeFromString(s);
+
+        double prob = reader.getProbability(p);
+
+        return "Probability of " + s + ": " + prob;
     }
 
     public void handleSave(CorpusReader reader) throws FileNotFoundException, UnsupportedEncodingException {
@@ -117,22 +114,22 @@ public class FileTools {
 
     private void printProbabilities(String filename, CorpusReader reader) throws FileNotFoundException,
             UnsupportedEncodingException {
-        PrintWriter writer = new PrintWriter("data/" + filename + ".txt", "UTF-8");
-
-        Phoneme mhP = new Consonant("m");
-        Phoneme shP = new Consonant("s");
-        Phoneme ahP = new Vowel("ɑ");
-        Phoneme ihP = new Vowel("i");
-        double probabilityM = reader.getProbability(mhP);
-        double probabilityP = reader.getProbability(shP);
-        double probabilityA = reader.getProbability(ahP);
-        double probabilityI = reader.getProbability(ihP);
-
-        writer.println("Probability of [m]: " + probabilityM);
-        writer.println("Probability of [s]: " + probabilityP);
-        writer.println("Probability of [ɑ]: " + probabilityA);
-        writer.println("Probability of [i]: " + probabilityI);
-        writer.close();
+//        PrintWriter writer = new PrintWriter("data/" + filename + ".txt", "UTF-8");
+//
+//        Phoneme mhP = new Consonant("m");
+//        Phoneme shP = new Consonant("s");
+//        Phoneme ahP = new Vowel("ɑ");
+//        Phoneme ihP = new Vowel("i");
+//        double probabilityM = reader.getProbability(mhP);
+//        double probabilityP = reader.getProbability(shP);
+//        double probabilityA = reader.getProbability(ahP);
+//        double probabilityI = reader.getProbability(ihP);
+//
+//        writer.println("Probability of [m]: " + probabilityM);
+//        writer.println("Probability of [s]: " + probabilityP);
+//        writer.println("Probability of [ɑ]: " + probabilityA);
+//        writer.println("Probability of [i]: " + probabilityI);
+//        writer.close();
     }
 
 }

@@ -143,8 +143,23 @@ public class CorpusReader implements Loader, Saver {
     }
 
     // EFFECTS: calculates type-based probability
-    public double getProbability(Phoneme p) {
-        return calculator.getProbability(p, calculator.words.values());
+    public double getProbability(Phoneme p) throws NoCorpusUploadedException {
+        if (calculator.words.values().size() > 0) {
+            return calculator.getProbability(p, calculator.words.values());
+        } else {
+            throw new NoCorpusUploadedException();
+        }
+    }
+
+    // EFFECTS: returns a phoneme based on a string
+    public Phoneme getPhonemeFromString(String s) throws UnexpectedCharacterException {
+        for (Phoneme p: language.inventory) {
+            if (s == p.sound) {
+                return p;
+            }
+        }
+
+        throw new UnexpectedCharacterException();
     }
 
     // EFFECTS: prints features; only exists because overridden methods can't exceed 20 lines?

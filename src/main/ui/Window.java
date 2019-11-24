@@ -15,6 +15,7 @@ import java.util.ArrayList;
 public class Window extends JFrame implements ActionListener {
     private MenuBar menuBar;
     private JFileChooser fileChooser;
+    private JLabel label;
     private FileTools fileTools;
 
     public Window() {
@@ -93,7 +94,9 @@ public class Window extends JFrame implements ActionListener {
                 JOptionPane.showMessageDialog(null, "No starter file uploaded.");
             }
         } else if (e.getSource() == menuBar.calculateFLoad) {
-            new ComboDialog();
+            new FloadDialog();
+        } else if (e.getSource() == menuBar.calculateProbability) {
+            new ProbDialog();
         } else if (e.getSource() == menuBar.exit) {
             dispose();
         }
@@ -121,8 +124,8 @@ public class Window extends JFrame implements ActionListener {
         }
     }
 
-    private class ComboDialog {
-        ComboDialog() {
+    private class FloadDialog {
+        FloadDialog() {
             JPanel panel = new JPanel();
             JComboBox<String> first = new JComboBox<>();
             JComboBox<String> second = new JComboBox<>();
@@ -142,6 +145,39 @@ public class Window extends JFrame implements ActionListener {
                 try {
                     String fload = fileTools.getFLoadAsString(a, b);
                     JOptionPane.showMessageDialog(null, fload);
+                } catch (UnexpectedCharacterException e) {
+                    JOptionPane.showMessageDialog(null, "Unexpected character.");
+                } catch (NoCorpusUploadedException e) {
+                    JOptionPane.showMessageDialog(null, "No corpus uploaded.");
+                }
+
+            } catch (NoStarterUploadedException e) {
+                JOptionPane.showMessageDialog(null, "No starter file uploaded.");
+            }
+        }
+
+        private void addPhonemes(JComboBox<String> jbox) throws NoStarterUploadedException {
+            for (String s : fileTools.getInventory()) {
+                jbox.addItem(s);
+            }
+        }
+    }
+
+    private class ProbDialog {
+        ProbDialog() {
+            JPanel panel = new JPanel();
+            JComboBox<String> p = new JComboBox<>();
+
+            try {
+                addPhonemes(p);
+                panel.add(p);
+                JOptionPane.showMessageDialog(null, panel);
+
+                String s = p.getItemAt(p.getSelectedIndex());
+
+                try {
+                    String prob = fileTools.getProbabilityAsString(s);
+                    JOptionPane.showMessageDialog(null, prob);
                 } catch (UnexpectedCharacterException e) {
                     JOptionPane.showMessageDialog(null, "Unexpected character.");
                 } catch (NoCorpusUploadedException e) {
