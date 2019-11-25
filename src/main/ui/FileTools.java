@@ -73,8 +73,8 @@ public class FileTools {
     }
 
     public String getFLoadAsString(String a, String b) throws UnexpectedCharacterException, NoCorpusUploadedException {
-        Phoneme first = reader.getPhonemeFromString(a);
-        Phoneme second = reader.getPhonemeFromString(b);
+        Phoneme first = language.getPhonemeFromString(a);
+        Phoneme second = language.getPhonemeFromString(b);
 
         double fload = reader.getFLoad(first, second);
 
@@ -82,7 +82,7 @@ public class FileTools {
     }
 
     public String getProbabilityAsString(String s) throws UnexpectedCharacterException, NoCorpusUploadedException {
-        Phoneme p = reader.getPhonemeFromString(s);
+        Phoneme p = language.getPhonemeFromString(s);
 
         double prob = reader.getProbability(p);
 

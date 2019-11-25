@@ -1,5 +1,7 @@
 package model.phonology;
 
+import model.exceptions.UnexpectedCharacterException;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -48,5 +50,16 @@ public class Language {
         phonemes.add(vowels);
 
         return phonemes;
+    }
+
+    // EFFECTS: returns a phoneme based on a string
+    public Phoneme getPhonemeFromString(String s) throws UnexpectedCharacterException {
+        for (Phoneme p: inventory) {
+            if (s == p.sound) {
+                return p;
+            }
+        }
+
+        throw new UnexpectedCharacterException();
     }
 }

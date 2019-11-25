@@ -151,16 +151,7 @@ public class CorpusReader implements Loader, Saver {
         }
     }
 
-    // EFFECTS: returns a phoneme based on a string
-    public Phoneme getPhonemeFromString(String s) throws UnexpectedCharacterException {
-        for (Phoneme p: language.inventory) {
-            if (s == p.sound) {
-                return p;
-            }
-        }
 
-        throw new UnexpectedCharacterException();
-    }
 
     // EFFECTS: prints features; only exists because overridden methods can't exceed 20 lines?
     private void printFeatures(Phoneme p, String acc) {

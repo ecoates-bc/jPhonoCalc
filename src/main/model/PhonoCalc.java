@@ -63,7 +63,6 @@ public class PhonoCalc extends Observable {
             totalSegments = totalSegments + 2;
         }
 
-        System.out.println(withP + " by " + totalSegments + " = " + withP / totalSegments);
         return withP / totalSegments;
     }
 
@@ -74,11 +73,8 @@ public class PhonoCalc extends Observable {
         for (Phoneme p: phonemeList) {
             double probP = getProbability(p, values);
             double step;
-            if (probP == 0) {
-                continue;
-            } else {
-                step = probP * (Math.log(probP) / Math.log(2));
-            }
+
+            step = probP * (Math.log(probP) / Math.log(2));
             sum += step;
         }
         return -sum;
@@ -88,11 +84,13 @@ public class PhonoCalc extends Observable {
     public double calculateFunctionalLoad(Phoneme p, Phoneme q, List<Phoneme> phonemeList) {
         Collection<List<Phoneme>> mergedList = new ArrayList<>();
         List<Phoneme> mergedInventory = new ArrayList<>(phonemeList);
+        Phoneme mergedP = new Consonant("X");
+
         for (List<Phoneme> word: words.values()) {
             List<Phoneme> mergedWord = new ArrayList<>();
             for (Phoneme sound: word) {
-                if (sound.equals(q)) {
-                    mergedWord.add(p);
+                if (sound.equals(p) || sound.equals(q)) {
+                    mergedWord.add(mergedP);
                 } else {
                     mergedWord.add(sound);
                 }
@@ -100,11 +98,31 @@ public class PhonoCalc extends Observable {
             mergedList.add(mergedWord);
         }
 
-        mergedInventory.remove(q);
+        removeFromInventory(mergedInventory, p.sound);
+        removeFromInventory(mergedInventory, q.sound);
+        mergedInventory.add(mergedP);
 
-        double beforeEntropy = getEntropy(phonemeList, words.values());
-        double afterEntropy = getEntropy(mergedInventory, mergedList);
+        return subtractEntropies(phonemeList, words.values(), mergedInventory, mergedList);
+    }
+
+    // EFFECTS: returns entropy difference; only exists because of checkstyle
+    private double subtractEntropies(List<Phoneme> list1, Collection<List<Phoneme>> wlist1,
+                             List<Phoneme> list2, Collection<List<Phoneme>> wlist2) {
+
+        double beforeEntropy = getEntropy(list1, wlist1);
+        double afterEntropy = getEntropy(list2, wlist2);
 
         return beforeEntropy - afterEntropy;
+    }
+
+    // MODIFIES: merged inventory
+    private void removeFromInventory(List<Phoneme> list, String s) {
+        Phoneme phon = null;
+        for (Phoneme p : list) {
+            if (p.sound == s) {
+                phon = p;
+            }
+        }
+        list.remove(phon);
     }
 }
