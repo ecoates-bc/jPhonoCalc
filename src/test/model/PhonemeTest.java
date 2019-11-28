@@ -62,5 +62,7 @@ public class PhonemeTest {
         qh.addFeature("-", f);
         assertEquals(f, ph.features.get("+feature"));
         assertEquals(f, qh.features.get("-feature"));
+        qh.removeFeature("-feature");
+        assertTrue(qh.features.values().size() == 0);
     }
 }

@@ -70,6 +70,17 @@ public class CorpusReaderTest {
         }
     }
 
+    @Test
+    void testRedfromApi() {
+        try {
+            reader.readFromAPI("data/testAPI.txt");
+            System.out.println("Correct!");
+
+        } catch (Exception e) {
+            fail("Should not have thrown");
+        }
+    }
+
     // TODO: implement these in PhonoCalc
 //    @Test
 //    void testGoodException() throws IOException {
