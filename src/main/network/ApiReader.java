@@ -23,6 +23,7 @@ public class ApiReader {
         ipaParser.parseData(data);
     }
 
+    // EFFECTS: reads data from the API query and returns it as a JSON file string
     public String readSource(InputStream inputStream) throws IOException {
         BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream));
         StringBuilder sb = new StringBuilder();

@@ -31,7 +31,6 @@ public class LanguageTest {
         assertFalse(inventory.contains(qh));
     }
 
-    // TODO: refactor this test
     @Test
     void testGetInventory() {
         inventory.addToInventory(ph);

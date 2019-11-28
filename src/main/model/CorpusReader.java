@@ -208,6 +208,7 @@ public class CorpusReader implements Loader, Saver {
         return new ArrayList<>(Arrays.asList(splits));
     }
 
+    // EFFECTS: creates a list of just vowels or consonants for getFLoadMatrix
     private List<Phoneme> narrowPhonemes(String type) {
         List<Phoneme> phonemes = new ArrayList<>();
 

@@ -47,6 +47,7 @@ public class MenuBar extends JMenuBar {
 
     }
 
+    // EFFECTS: Makes adding menu items smoother
     public JMenuItem addMenuItem(String title, ActionListener l, JMenu menu) {
         JMenuItem j = new JMenuItem(title);
         j.addActionListener(l);

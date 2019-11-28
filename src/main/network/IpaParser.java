@@ -26,6 +26,7 @@ public class IpaParser {
         parseIPA();
     }
 
+    // EFFECTS: turns IPA from JSON file into a list of characters, minus non-phonemic symbols
     public void parseIPA() {
         char[] ipaListChars = ipa.toCharArray();
         for (char c: ipaListChars) {

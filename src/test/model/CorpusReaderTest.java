@@ -50,7 +50,6 @@ public class CorpusReaderTest {
         assertFalse(reader.language.inventory.get(0).features.isEmpty());
     }
 
-    // TODO: refactor this
     @Test
     void testOutput() throws IOException {
         reader.language.inventory.add(pa);

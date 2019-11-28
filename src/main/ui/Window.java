@@ -42,6 +42,7 @@ public class Window extends JFrame implements ActionListener {
         setVisible(true);
     }
 
+    // EFFECTS: checks for all actions
     @Override
     public void actionPerformed(ActionEvent e) {
         corpusStarterAction(e);
@@ -51,6 +52,7 @@ public class Window extends JFrame implements ActionListener {
         saveChartActions(e);
     }
 
+    // EFFECTS: handles loading starter file and any exceptions
     private void corpusStarterAction(ActionEvent e) {
         if (e.getSource() == menuBar.loadStarter) {
             String path = optionDialog();
@@ -72,6 +74,7 @@ public class Window extends JFrame implements ActionListener {
         }
     }
 
+    // EFFECTS: handles loading corpus from file and any exceptions
     private void loadCorpusActions(ActionEvent e) {
         if (e.getSource() == menuBar.loadCorpus) {
             String path = optionDialog();
@@ -85,6 +88,7 @@ public class Window extends JFrame implements ActionListener {
         }
     }
 
+    // EFFECTS: handles viewing phonemes, functional load, probability, and any exceptions
     private void phonoActions(ActionEvent e) {
         if (e.getSource() == menuBar.viewPhonemes) {
             try {
@@ -102,6 +106,7 @@ public class Window extends JFrame implements ActionListener {
         }
     }
 
+    // EFFECTS: handles loading corpus from API and any exceptions
     private void apiLoadActions(ActionEvent e) {
         if (e.getSource() == menuBar.loadApi) {
             String path = optionDialog();
@@ -115,12 +120,14 @@ public class Window extends JFrame implements ActionListener {
         }
     }
 
+    // EFFECTS: handles saving fLoad matrix to csv file
     private void saveChartActions(ActionEvent e) {
         if (e.getSource() == menuBar.floadMatrix) {
             new MatrixDialog();
         }
     }
 
+    // EFFECTS: handles uploading files
     private String optionDialog() {
         int returnValue = fileChooser.showOpenDialog(null);
         if (returnValue == JFileChooser.APPROVE_OPTION) {
@@ -130,6 +137,7 @@ public class Window extends JFrame implements ActionListener {
         }
     }
 
+    // EFFECTS: handles UI for selecting phonemes for fLoad calculation; exceptions
     private class FloadDialog {
         FloadDialog() {
             JPanel panel = new JPanel();
@@ -169,6 +177,7 @@ public class Window extends JFrame implements ActionListener {
         }
     }
 
+    // EFFECTS: handles UI for selecting the phoneme for probability calculation; exceptions
     private class ProbDialog {
         ProbDialog() {
             JPanel panel = new JPanel();
@@ -202,6 +211,7 @@ public class Window extends JFrame implements ActionListener {
         }
     }
 
+    // EFFECTS: handles UI for choosing types of matrix
     private class MatrixDialog {
         MatrixDialog() {
             JPanel panel = new JPanel();

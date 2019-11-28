@@ -24,6 +24,8 @@ public class FileTools {
     public FileTools() {
     }
 
+    // MODIFIES: this.language, reader
+    // EFFECTS: creates a new reader, language for corpus work
     public void handleUpload(String path) throws IOException, OverwritingStarterException {
         if (this.reader == null) {
             language = new Language();
@@ -37,6 +39,8 @@ public class FileTools {
         this.reader = null;
     }
 
+    // MODIFIES: this.reader
+    // EFFECTS: reads word data from file
     public void handleRead(String path) throws IOException, NoStarterUploadedException {
         if (this.reader != null) {
             reader.read(path);
@@ -45,6 +49,8 @@ public class FileTools {
         }
     }
 
+    // MODIFIES: this.reader
+    // EFFECTS: reads word data using API
     public void getApiValues(String path) throws IOException, NoStarterUploadedException {
         if (this.reader != null) {
             reader.readFromAPI(path);
@@ -53,6 +59,7 @@ public class FileTools {
         }
     }
 
+    // EFFECTS: return a string of all phonemes for displaying
     public ArrayList<String> viewPhonemesAsString() throws NoStarterUploadedException {
         if (reader != null) {
             return language.viewPhonemesAsString();
@@ -69,6 +76,7 @@ public class FileTools {
         }
     }
 
+    // EFFECTS: gets functional load of two sounds; prepares it to be displayed
     public String getFLoadAsString(String a, String b) throws UnexpectedCharacterException, NoCorpusUploadedException {
         Phoneme first = language.getPhonemeFromString(a);
         Phoneme second = language.getPhonemeFromString(b);
@@ -78,6 +86,7 @@ public class FileTools {
         return "Functional load of " + a + " and " + b + ": " + fload + "%";
     }
 
+    // EFFECTS: gets probability of a sound; prepares it to be displayed
     public String getProbabilityAsString(String s) throws UnexpectedCharacterException, NoCorpusUploadedException {
         Phoneme p = language.getPhonemeFromString(s);
 
@@ -86,6 +95,8 @@ public class FileTools {
         return "Probability of " + s + ": " + prob + "%";
     }
 
+    // EFFECTS: saves functional load matrix as a CSV file to path, narrows down inventory to just vowels or consonants
+    //  (optional)
     public void getFLoadMatrix(String type, String path) throws NoCorpusUploadedException, NoStarterUploadedException,
             FileNotFoundException, UnsupportedEncodingException {
         if (reader != null) {
@@ -99,51 +110,6 @@ public class FileTools {
         } else {
             throw new NoStarterUploadedException();
         }
-    }
-
-    public void handleSave(CorpusReader reader) throws FileNotFoundException, UnsupportedEncodingException {
-//        System.out.println("Name output file:");
-//        path = input.nextLine();
-//        reader.save(path);
-//        printProbabilities(path, reader);
-    }
-
-
-
-    private void printFunctionalLoad(String filename, CorpusReader reader) throws FileNotFoundException,
-            UnsupportedEncodingException, NoCorpusUploadedException {
-        PrintWriter writer = new PrintWriter("data/" + filename + ".txt", "UTF-8");
-
-        Phoneme phP = new Consonant("m");
-        Phoneme bhP = new Consonant("n");
-        Phoneme chP = new Consonant("s");
-        Phoneme khP = new Consonant("ʃ");
-        double functionalLoad1 = reader.getFLoad(phP, bhP);
-        double functionalLoad2 = reader.getFLoad(chP, khP);
-
-        writer.println("Functional load of m and n: " + functionalLoad1);
-        writer.println("Functional load of s and ʃ: " + functionalLoad2);
-        writer.close();
-    }
-
-    private void printProbabilities(String filename, CorpusReader reader) throws FileNotFoundException,
-            UnsupportedEncodingException {
-//        PrintWriter writer = new PrintWriter("data/" + filename + ".txt", "UTF-8");
-//
-//        Phoneme mhP = new Consonant("m");
-//        Phoneme shP = new Consonant("s");
-//        Phoneme ahP = new Vowel("ɑ");
-//        Phoneme ihP = new Vowel("i");
-//        double probabilityM = reader.getProbability(mhP);
-//        double probabilityP = reader.getProbability(shP);
-//        double probabilityA = reader.getProbability(ahP);
-//        double probabilityI = reader.getProbability(ihP);
-//
-//        writer.println("Probability of [m]: " + probabilityM);
-//        writer.println("Probability of [s]: " + probabilityP);
-//        writer.println("Probability of [ɑ]: " + probabilityA);
-//        writer.println("Probability of [i]: " + probabilityI);
-//        writer.close();
     }
 
 }
