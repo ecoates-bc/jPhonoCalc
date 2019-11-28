@@ -138,7 +138,6 @@ public class CorpusReader implements Loader, Saver {
     //EFFECTS: calculate the functional load of two phonemes, see PhonoCalc for more info
     public double getFLoad(Phoneme p, Phoneme q) throws NoCorpusUploadedException {
         if (hasBeenRead()) {
-            System.out.println("Load:" + calculator.calculateFunctionalLoad(p, q, language.inventory));
             return calculator.calculateFunctionalLoad(p, q, language.inventory);
         } else {
             throw new NoCorpusUploadedException();
