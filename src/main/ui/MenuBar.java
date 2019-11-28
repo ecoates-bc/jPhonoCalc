@@ -8,11 +8,12 @@ public class MenuBar extends JMenuBar {
     JMenuItem loadStarter;
     JMenuItem loadCorpus;
     JMenuItem loadApi;
-    JMenuItem saveCorpus;
     JMenuItem exit;
     JMenuItem viewPhonemes;
+    JMenuItem addFeatures;
     JMenuItem calculateProbability;
     JMenuItem calculateFLoad;
+    JMenuItem floadMatrix;
 
     public MenuBar(ActionListener l) {
         super();
@@ -22,7 +23,6 @@ public class MenuBar extends JMenuBar {
         loadStarter = addMenuItem("Load starter from file...", l, menuFile);
         loadCorpus = addMenuItem("Load corpus from file...", l, menuFile);
         loadApi = addMenuItem("Load API corpus from file...", l, menuFile);
-        saveCorpus = addMenuItem("Save corpus...", l, menuFile);
 
         JSeparator fileSeparator = new JSeparator();
         menuFile.add(fileSeparator);
@@ -33,13 +33,16 @@ public class MenuBar extends JMenuBar {
 
         JMenu menuLanguage = new JMenu("Language");
         viewPhonemes = addMenuItem("Phonemes", l, menuLanguage);
-        menuLanguage.add(viewPhonemes);
+        addFeatures = addMenuItem("Features...", l, menuLanguage);
 
         add(menuLanguage);
 
         JMenu menuCorpus = new JMenu("Corpus");
         calculateProbability = addMenuItem("Probability...", l, menuCorpus);
         calculateFLoad = addMenuItem("Functional load...", l, menuCorpus);
+        JSeparator corpSeparator = new JSeparator();
+        menuCorpus.add(corpSeparator);
+        floadMatrix = addMenuItem("Functional load matrix...", l, menuCorpus);
         add(menuCorpus);
 
     }

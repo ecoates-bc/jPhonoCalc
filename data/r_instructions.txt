@@ -1,0 +1,11 @@
+floads <- read.csv("matrix.csv")
+
+row.names(floads) <- floads[, 1]
+floads <- floads [, -1]
+
+fit <- cmdscale(floads, eig = TRUE, k = 2)
+x < fit$points[, 1]
+y <- fit$points[, 2]
+
+plot(x, y, pch = 19, xlim = range(x))
+text(x, y, pos = 3, labels = row.names)

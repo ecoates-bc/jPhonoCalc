@@ -60,6 +60,17 @@ public class CorpusReaderTest {
 
     }
 
+    @Test
+    void testGetFLoadMatrix() throws IOException {
+        reader.read("data/test.txt");
+
+        try {
+            System.out.println(reader.getFLoadMatrix("All"));
+        } catch (Exception e) {
+            fail("Exception thrown");
+        }
+    }
+
     // TODO: implement these in PhonoCalc
 //    @Test
 //    void testGoodException() throws IOException {

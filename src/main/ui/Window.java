@@ -15,7 +15,6 @@ import java.util.ArrayList;
 public class Window extends JFrame implements ActionListener {
     private MenuBar menuBar;
     private JFileChooser fileChooser;
-    private JLabel label;
     private FileTools fileTools;
 
     public Window() {
@@ -45,13 +44,14 @@ public class Window extends JFrame implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        menuBarActions(e);
+        corpusStarterAction(e);
         loadCorpusActions(e);
-        menuBarActions2(e);
-        menuBarActions3(e);
+        phonoActions(e);
+        apiLoadActions(e);
+        saveChartActions(e);
     }
 
-    private void menuBarActions(ActionEvent e) {
+    private void corpusStarterAction(ActionEvent e) {
         if (e.getSource() == menuBar.loadStarter) {
             String path = optionDialog();
             try {
@@ -85,7 +85,7 @@ public class Window extends JFrame implements ActionListener {
         }
     }
 
-    private void menuBarActions2(ActionEvent e) {
+    private void phonoActions(ActionEvent e) {
         if (e.getSource() == menuBar.viewPhonemes) {
             try {
                 ArrayList<String> phonemes = fileTools.viewPhonemesAsString();
@@ -102,7 +102,7 @@ public class Window extends JFrame implements ActionListener {
         }
     }
 
-    private void menuBarActions3(ActionEvent e) {
+    private void apiLoadActions(ActionEvent e) {
         if (e.getSource() == menuBar.loadApi) {
             String path = optionDialog();
             try {
@@ -112,6 +112,12 @@ public class Window extends JFrame implements ActionListener {
             } catch (NoStarterUploadedException ex) {
                 JOptionPane.showMessageDialog(null, "No starter file uploaded.");
             }
+        }
+    }
+
+    private void saveChartActions(ActionEvent e) {
+        if (e.getSource() == menuBar.floadMatrix) {
+            new MatrixDialog();
         }
     }
 
@@ -192,6 +198,36 @@ public class Window extends JFrame implements ActionListener {
         private void addPhonemes(JComboBox<String> jbox) throws NoStarterUploadedException {
             for (String s : fileTools.getInventory()) {
                 jbox.addItem(s);
+            }
+        }
+    }
+
+    private class MatrixDialog {
+        MatrixDialog() {
+            JPanel panel = new JPanel();
+            JComboBox<String> p = new JComboBox<>();
+            p.addItem("Vowels");
+            p.addItem("Consonants");
+            p.addItem("All");
+            panel.add(p);
+
+            JOptionPane.showMessageDialog(null, panel, "Types:",
+                    JOptionPane.INFORMATION_MESSAGE);
+
+            String response = p.getItemAt(p.getSelectedIndex());
+
+            try {
+                int selection = fileChooser.showSaveDialog(null);
+
+                if (selection == JFileChooser.APPROVE_OPTION) {
+                    fileTools.getFLoadMatrix(response, fileChooser.getSelectedFile().getAbsolutePath());
+                }
+            } catch (NoStarterUploadedException e) {
+                JOptionPane.showMessageDialog(null, "No starter file uploaded.");
+            } catch (NoCorpusUploadedException e) {
+                JOptionPane.showMessageDialog(null, "No corpus uploaded.");
+            } catch (IOException e) {
+                JOptionPane.showMessageDialog(null, "Action not supported.");
             }
         }
     }

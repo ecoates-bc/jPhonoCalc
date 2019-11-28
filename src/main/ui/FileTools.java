@@ -14,20 +14,18 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.io.UnsupportedEncodingException;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 
 public class FileTools {
-    private String path;
     private CorpusReader reader;
     private Language language;
 
     public FileTools() {
-        path = "";
     }
 
     public void handleUpload(String path) throws IOException, OverwritingStarterException {
         if (this.reader == null) {
-            this.path = path;
             language = new Language();
             reader = new CorpusReader(language, path);
         } else {
@@ -41,7 +39,6 @@ public class FileTools {
 
     public void handleRead(String path) throws IOException, NoStarterUploadedException {
         if (this.reader != null) {
-            this.path = path;
             reader.read(path);
         } else {
             throw new NoStarterUploadedException();
@@ -76,17 +73,32 @@ public class FileTools {
         Phoneme first = language.getPhonemeFromString(a);
         Phoneme second = language.getPhonemeFromString(b);
 
-        double fload = reader.getFLoad(first, second);
+        String fload = reader.getFriendlyNumber(reader.getFLoad(first, second));
 
-        return "Functional load of " + a + " and " + b + ": " + fload;
+        return "Functional load of " + a + " and " + b + ": " + fload + "%";
     }
 
     public String getProbabilityAsString(String s) throws UnexpectedCharacterException, NoCorpusUploadedException {
         Phoneme p = language.getPhonemeFromString(s);
 
-        double prob = reader.getProbability(p);
+        String prob = reader.getFriendlyNumber(reader.getProbability(p));
 
-        return "Probability of " + s + ": " + prob;
+        return "Probability of " + s + ": " + prob + "%";
+    }
+
+    public void getFLoadMatrix(String type, String path) throws NoCorpusUploadedException, NoStarterUploadedException,
+            FileNotFoundException, UnsupportedEncodingException {
+        if (reader != null) {
+            ArrayList<String> matrix = reader.getFLoadMatrix(type);
+            PrintWriter writer = new PrintWriter(path);
+
+            for (String l: matrix) {
+                writer.println(l);
+            }
+            writer.close();
+        } else {
+            throw new NoStarterUploadedException();
+        }
     }
 
     public void handleSave(CorpusReader reader) throws FileNotFoundException, UnsupportedEncodingException {
@@ -95,6 +107,8 @@ public class FileTools {
 //        reader.save(path);
 //        printProbabilities(path, reader);
     }
+
+
 
     private void printFunctionalLoad(String filename, CorpusReader reader) throws FileNotFoundException,
             UnsupportedEncodingException, NoCorpusUploadedException {

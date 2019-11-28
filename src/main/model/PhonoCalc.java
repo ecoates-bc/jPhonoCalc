@@ -7,6 +7,8 @@ import model.phonology.Phoneme;
 
 import java.util.*;
 
+import static java.lang.Double.NaN;
+
 public class PhonoCalc extends Observable {
     public Map<String, List<Phoneme>> words;
 
@@ -41,7 +43,7 @@ public class PhonoCalc extends Observable {
                     continue OuterLoop;
                 }
             }
-            throw new UnexpectedCharacterException(sound);
+//            throw new UnexpectedCharacterException(sound);
         }
         return phonemes;
     }
@@ -74,8 +76,10 @@ public class PhonoCalc extends Observable {
             double probP = getProbability(p, values);
             double step;
 
-            step = probP * (Math.log(probP) / Math.log(2));
-            sum += step;
+            if (probP != 0) {
+                step = probP * (Math.log(probP) / Math.log(2));
+                sum += step;
+            }
         }
         return -sum;
     }
